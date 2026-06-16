@@ -198,8 +198,7 @@ iframe {
 }
 /* FAQ header adjustments */
 #sidebar-content h1 {
-  #sidebar-content h1 {
-    font-size: 1.25rem;
-    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+    margin: 0 0 10px 0;
     font-weight: 600;
 }
