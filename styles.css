@@ -152,10 +152,14 @@ iframe {
 #sidebar-content li {
     margin-bottom: 4px;
 }
+
 #sidebar-content {
     overflow-y: auto;
     max-height: 100%;
 }
+
 #sidebar-content {
-    padding-bottom: 24px;
+    padding-bottom: 40px;
+}
+
 }
