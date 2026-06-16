@@ -20,10 +20,11 @@ section {
 
 /* LG3 Green Section Headers */
 section h2 {
-    color: #2e7d32; /* LG3 green (adjust if your exact hex differs) */
+    color: #2e7d32; /* LG3 green */
     font-size: 2rem;
     font-weight: 700;
 }
+
 /* ----------------------------- */
 /* Fixed Slim Navigation Bar     */
 /* ----------------------------- */
@@ -33,15 +34,15 @@ section h2 {
     top: 0;
     left: 0;
     width: 100%;
-    background: #ffffff; /* Pure white */
-    border-bottom: 1px solid #e0e0e0; /* Light gray bottom border */
+    background: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
     z-index: 1000;
 }
 
 .nav-content {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 12px 24px; /* Slim height */
+    padding: 12px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,10 +57,10 @@ section h2 {
 .nav-links a {
     margin-left: 24px;
     text-decoration: none;
-    color: #000000; /* Pure black nav text */
-    font-weight: 500; /* Medium weight */
+    color: #000000;
+    font-weight: 500;
     position: relative;
-    padding-bottom: 4px; /* Space for underline */
+    padding-bottom: 4px;
 }
 
 /* Fade‑in 2px underline */
@@ -69,30 +70,35 @@ section h2 {
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 2px; /* Slightly thicker underline */
-    background: rgba(0, 0, 0, 0.75); /* Black @ 70–80% */
+    height: 2px;
+    background: rgba(0, 0, 0, 0.75);
     opacity: 0;
     transition: opacity 0.25s ease;
 }
 
 .nav-links a:hover::after {
-    opacity: 1; /* Fade in */
+    opacity: 1;
 }
 
 /* Add top padding so content isn't hidden behind fixed nav */
 body {
     padding-top: 60px;
 }
+
 /* Force iframe background to pure white */
 iframe {
     background: #ffffff;
     display: block;
     border: none;
 }
-/* Sidebar */
+
+/* ----------------------------- */
+/* Sidebar                       */
+/* ----------------------------- */
+
 #sidebar {
     position: fixed;
-    top: 60px; /* below nav */
+    top: 60px;
     left: 0;
     width: 350px;
     height: calc(100vh - 60px);
@@ -109,7 +115,10 @@ iframe {
     transform: translateX(0);
 }
 
-/* App area shifts when sidebar opens */
+/* ----------------------------- */
+/* App Area                      */
+/* ----------------------------- */
+
 #app-area {
     margin-left: 0;
     transition: margin-left 0.3s ease;
@@ -122,16 +131,21 @@ iframe {
 /* App iframe */
 .app-frame {
     width: 100%;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 80px); /* prevents overlap with sidebar bottom */
     border: none;
     background: #ffffff;
 }
 
-}
-/* Sidebar content typography */
+/* ----------------------------- */
+/* Sidebar Content Typography    */
+/* ----------------------------- */
+
 #sidebar-content {
     font-size: 14px;
     line-height: 1.45;
+    overflow-y: auto;
+    max-height: 100%;
+    padding-bottom: 40px; /* ensures last line is fully visible */
 }
 
 #sidebar-content h2 {
@@ -151,15 +165,4 @@ iframe {
 
 #sidebar-content li {
     margin-bottom: 4px;
-}
-
-#sidebar-content {
-    overflow-y: auto;
-    max-height: 100%;
-}
-
-#sidebar-content {
-    padding-bottom: 40px;
-}
-
 }
