@@ -122,9 +122,11 @@ iframe {
 /* App iframe */
 .app-frame {
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 80px);
     border: none;
     background: #ffffff;
+}
+
 }
 /* Sidebar content typography */
 #sidebar-content {
