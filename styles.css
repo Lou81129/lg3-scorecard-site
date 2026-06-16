@@ -1,0 +1,211 @@
+/* ----------------------------- */
+/* Global Layout + Typography    */
+/* ----------------------------- */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #ffffff; /* Pure white */
+    color: #000000; /* Pure black text */
+    line-height: 1.6;
+}
+
+/* Comfortably wide content */
+section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px; /* Comfortable but not excessive */
+}
+
+/* LG3 Green Section Headers */
+section h2 {
+    color: #2e7d32; /* LG3 green */
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* ----------------------------- */
+/* Fixed Slim Navigation Bar     */
+/* ----------------------------- */
+
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    z-index: 1000;
+}
+
+.nav-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.nav-links a {
+    margin-left: 24px;
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 4px;
+}
+
+/* Fade‑in 2px underline */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.75);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.nav-links a:hover::after {
+    opacity: 1;
+}
+
+/* Add top padding so content isn't hidden behind fixed nav */
+body {
+    padding-top: 60px;
+}
+
+/* Force iframe background to pure white */
+iframe {
+    background: #ffffff;
+    display: block;
+    border: none;
+}
+
+/* ----------------------------- */
+/* Sidebar                       */
+/* ----------------------------- */
+
+#sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 350px;
+    height: calc(100vh - 60px);
+    background: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    padding: 24px;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 900;
+}
+
+#sidebar.open {
+    transform: translateX(0);
+}
+
+/* ----------------------------- */
+/* App Area                      */
+/* ----------------------------- */
+
+#app-area {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+#app-area.shifted {
+    margin-left: 350px;
+}
+
+/* App iframe */
+.app-frame {
+    width: 100%;
+    height: calc(100vh - 80px); /* prevents overlap with sidebar bottom */
+    border: none;
+    background: #ffffff;
+}
+
+/* ----------------------------- */
+/* Sidebar Content Typography    */
+/* ----------------------------- */
+
+#sidebar-content {
+    font-size: 14px;
+    line-height: 1.45;
+    padding-bottom: 40px; /* ensures last line is fully visible */
+}
+
+#sidebar-content h3 {
+    font-size: 16px;
+    margin-top: 18px;
+    margin-bottom: 6px;
+}
+
+#sidebar-content ul {
+    margin-left: 18px;
+}
+
+#sidebar-content li {
+    margin-bottom: 4px;
+}
+/* FAQ styles */
+.faq-item {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 17px;
+    background: #f2f2f2;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.2s ease;
+}
+
+.faq-question:hover {
+    background: #e8e8e8;
+}
+
+.faq-answer {
+    display: none;
+    padding: 12px 16px;
+    background: #fff;
+    border-left: 3px solid #0078d4;
+}
+
+.faq-answer p {
+    margin: 3px 0;
+}
+/* FAQ header adjustments */
+#sidebar-content h1 {
+    font-size: 1.1rem;
+    margin: 0 0 10px 0;
+    font-weight: 650;
+}
+
+/* Sidebar section headers */
+#sidebar-content h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 16px 0 8px 0;
+}
+
+/* Pull content higher in sidebar */
+#sidebar {
+    padding: 16px 24px;
+}

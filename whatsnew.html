@@ -1,0 +1,44 @@
+<h1>What’s New – Build 91.2</h1>
+<p>Released June 16, 2026 · Built from v91.1 baseline</p>
+
+<h2>New Features</h2>
+
+<h3>15/20 Balls Stableford game type</h3>
+<p>Added as a selectable option in the Game dropdown. This format produces the Stableford layout with Points rows and a 3‑row game section.</p>
+
+<h3>Stableford Points row</h3>
+<p>A thin, light‑green shaded row (18 boxes) now appears beneath each player’s score row when 15/20 Balls Stableford is selected.</p>
+
+<h3>3‑row Stableford game section</h3>
+<p>The bottom game area now shows: # Scores · Total Points per Hole · Cumulative Points when Stableford is active.</p>
+
+<h2>Bug Fixes</h2>
+
+<h3>Rogue in‑card GAME dropdown</h3>
+<p>Removed the entire rsel_l / rsel_r DOM block and all related CSS from <code>buildTable()</code>.</p>
+
+<h3>Game dropdown defaulting incorrectly</h3>
+<p>The game selector no longer defaults to Stableford. <code>activeGameId</code> is now hardcoded to <strong>none</strong> on startup.</p>
+
+<h3>Game selection persisting between sessions</h3>
+<p>Removed <code>localStorage.setItem('lg3_game')</code>. Game choice now resets on every load as intended.</p>
+
+<h3>Dead sync code in applyGameProfile()</h3>
+<p>Removed an orphaned <code>cgs.value = gameId</code> reference that no longer applied to the current UI.</p>
+
+<h3>Grey body background inside iframe</h3>
+<p>Changed the body background from <code>#ccc</code> to pure white to eliminate the visible grey border when embedded.</p>
+
+<h3>Redundant Export PDF button</h3>
+<p>Removed the button and its unused <code>initPdfExport()</code> code. Print Card already saves as PDF.</p>
+
+<h2>Unchanged / Preserved</h2>
+<ul>
+    <li>All 8 standard game profiles (Arizona Shuffle, Montana Mayhem, One Gross/Two Low Net, etc.)</li>
+    <li>Course Profiles – Tampa Palms G&CC and Hunter’s Green</li>
+    <li>All 4‑card save and sync systems</li>
+    <li>Print layout (Color and B&W modes)</li>
+    <li>Manual tee time inputs</li>
+    <li>HG Blue/White tee rating 70.8 / slope 130</li>
+    <li>“– Select Game –” placeholder defaults on every fresh load</li>
+</ul>
