@@ -146,11 +146,6 @@ iframe {
     padding-bottom: 40px; /* ensures last line is fully visible */
 }
 
-#sidebar-content h2 {
-    font-size: 20px;
-    margin-bottom: 12px;
-}
-
 #sidebar-content h3 {
     font-size: 16px;
     margin-top: 18px;
@@ -200,5 +195,17 @@ iframe {
 #sidebar-content h1 {
     font-size: 1.1rem;
     margin: 0 0 10px 0;
-    font-weight: 600;
+    font-weight: 650;
+}
+
+/* Sidebar section headers */
+#sidebar-content h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 16px 0 8px 0;
+}
+
+/* Pull content higher in sidebar */
+#sidebar {
+    padding: 16px 24px;
 }
