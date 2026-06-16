@@ -156,3 +156,6 @@ iframe {
     overflow-y: auto;
     max-height: 100%;
 }
+#sidebar-content {
+    padding-bottom: 24px;
+}
