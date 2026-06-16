@@ -143,8 +143,6 @@ iframe {
 #sidebar-content {
     font-size: 14px;
     line-height: 1.45;
-    overflow-y: auto;
-    max-height: 100%;
     padding-bottom: 40px; /* ensures last line is fully visible */
 }
 
