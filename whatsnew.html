@@ -1,0 +1,68 @@
+<h1>What’s New – Build 92</h1>
+<p>Released: June 17, 2026 · Built from v91.2 baseline</p>
+
+<h2>New Features</h2>
+
+<h3>Static Match Play Team Labels Removed</h3>
+<p>
+The hardcoded <strong>TEAM A</strong> and <strong>TEAM B</strong> labels that appeared above the Player 1/2 and Player 3/4 rows in every Match Play scoring grid have been permanently removed.
+</p>
+
+<p><strong>The problem:</strong> These labels were baked into the Match Play HTML at build time and always read “TEAM A” and “TEAM B” — even when the actual matchup was C vs D, E vs F, or G vs H. This made the card incorrect for 6 out of 8 possible pairings.</p>
+
+<p><strong>What was removed:</strong></p>
+<ul>
+    <li><code>&lt;span class="mhf-lbl"&gt;Team A&lt;/span&gt;</code> — static Match Header label</li>
+    <li><code>&lt;span class="mhf-lbl"&gt;Team B&lt;/span&gt;</code> — static Match Header label</li>
+</ul>
+
+<p><strong>What was preserved:</strong></p>
+<ul>
+    <li>Team letter dropdowns (A–H) — fully dynamic</li>
+    <li>Player name display spans — dynamically populated</li>
+    <li><code>mpSyncLabels()</code> — continues to correctly generate “Team C · Best Ball,” “Team D · Best Ball,” etc.</li>
+    <li>All Match Play grid structure, MATCH row, and Best Ball rows</li>
+</ul>
+
+<h3>Game Selector Dropdown Disabled in Match Play Mode</h3>
+<p>
+The <strong>Select Game</strong> dropdown in the Setup Panel is now automatically disabled whenever Match Play mode is active.
+</p>
+
+<p><strong>Behavior in Match Play:</strong></p>
+<ul>
+    <li>Dropdown disabled (non-interactive)</li>
+    <li>Greyed out — <code>opacity: 0.45</code></li>
+    <li>Cursor changes to <code>not-allowed</code></li>
+    <li>Hover tooltip: “Game selection applies to Stroke Play only.”</li>
+</ul>
+
+<p><strong>Behavior when switching back to Stroke Play:</strong></p>
+<ul>
+    <li>Dropdown fully re-enabled</li>
+    <li>Normal opacity restored</li>
+    <li>Cursor returns to pointer</li>
+    <li>Tooltip cleared</li>
+</ul>
+
+<p><strong>What was NOT changed:</strong></p>
+<ul>
+    <li>All Game Profile logic</li>
+    <li>All Stroke Play game behavior</li>
+    <li>15/20 Balls Stableford layout</li>
+    <li>Switching between modes retains all player data</li>
+</ul>
+
+<h2>System Status</h2>
+<ul>
+    <li>Course Profiles (Tampa Palms + Hunter’s Green) — <strong>Intact</strong></li>
+    <li>All 8 Game Profiles + 15/20 Balls Stableford — <strong>Intact</strong></li>
+    <li>4‑card save and sync system — <strong>Intact</strong></li>
+    <li>HG Blue/White tee rating 70.8 / slope 130 — <strong>Intact</strong></li>
+    <li><code>buildMatchPlayTable()</code> — full Match Play engine — <strong>Intact</strong></li>
+    <li><code>mpSyncLabels()</code> — dynamic team name logic — <strong>Intact</strong></li>
+    <li>Print layout (Color and B&W modes) — <strong>Intact</strong></li>
+    <li>Stableford Points row layout — <strong>Intact</strong></li>
+    <li>White <code>#fff</code> body background (iframe safe) — <strong>Intact</strong></li>
+    <li>Game dropdown defaults to “— Select Game —” — <strong>Intact</strong></li>
+</ul>
