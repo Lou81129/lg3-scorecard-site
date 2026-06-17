@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LG3 Scorecard v92</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Arial Narrow',Arial,sans-serif;background:#ccc;}
+:root{
+  --green:#1a5c2e;--gl:#e8f5e0;--gm:#c8e6c0;--amber:#fff3cd;--bdr:#555;
+}
+#setup{background:#fff;border:2px solid var(--green);border-radius:4px;margin:10px auto;width:11in;overflow:hidden;}
+.shdr{background:var(--green);color:#fff;font-weight:700;font-size:11px;padding:5px 10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+.sbody{padding:8px 10px;display:flex;flex-direction:column;gap:6px;}
+.srow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.sf{display:flex;flex-direction:column;gap:2px;}
+.sf label{font-size:9px;font-weight:700;color:#555;text-transform:uppercase;}
+.sf input,.sf select{font-family:'Arial Narrow',Arial,sans-serif;font-size:10px;border:1px solid #bbb;border-radius:2px;padding:2px 4px;}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.pc{background:#f5f9f5;border:1px solid var(--gm);border-radius:3px;padding:8px 8px 6px;}
+.pc label{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;display:block;margin-bottom:3px;}
+.pc input,.pc select{width:100%;font-family:'Arial Narrow',Arial,sans-serif;font-size:13px;border:1px solid #bbb;border-radius:2px;padding:4px 5px;margin-bottom:5px;}
+.chd{font-size:12px;color:#444;font-style:italic;font-weight:600;}
+.brow{display:flex;gap:6px;justify-content:flex-end;margin-top:2px;align-items:center;flex-wrap:wrap;}
+.bprint{background:var(--green);color:#fff;border:none;border-radius:3px;padding:4px 14px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Arial Narrow',Arial,sans-serif;}
+.bclear{background:#888;color:#fff;border:none;border-radius:3px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'Arial Narrow',Arial,sans-serif;}
+.bback{background:#555;color:#fff;border:none;border-radius:3px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'Arial Narrow',Arial,sans-serif;}
+.printer-mode-wrap{display:flex;align-items:center;gap:3px;font-size:10px;color:#333;}
+.printer-mode-wrap label{font-size:10px;font-weight:700;white-space:nowrap;}
+#printer-mode{font-family:'Arial Narrow',Arial,sans-serif;font-size:10px;border:1px solid #bbb;border-radius:2px;padding:2px 4px;}
+
+
+
+.clbl{width:1.55in;}
+.csub{width:0.33in;}
+.cp3{width:0.30in;}
+.rhdr td{height:17px;font-size:7pt;font-weight:700;}
+.rpar td{height:14px;font-size:7pt;}
+.rsi td{height:13px;font-size:6pt;color:#555;}
+.rpl td{height:42px;}
+.rgm td{height:34px;font-size:10pt;overflow:visible;padding:0!important;vertical-align:middle;}
+.rgm td.p3c{background:var(--amber);}
+/* ── v90: 15/20 Balls Stableford layout ─────────────────────────────────── */
+.rsf{display:none;}
+.rsf td{height:18px;font-size:6.5pt;font-style:italic;color:var(--green);background:#eef6ee;border-color:#b8d8b8!important;}
+.rsf td.lsf{background:#ddeedd!important;font-weight:700;text-align:left;padding-left:4px!important;}
+.rsf td.sfp3{background:#fdf5cc!important;}
+.stbl-pts .rsf{display:table-row;}
+.stbl-pts .rpl td{height:28px!important;line-height:1.2;padding-bottom:2px;}
+.stbl-pts .rgm-4{display:none;}
+/* ── v91: Game Selector Row ─────────────────────────────────────────────── */
+/* ───────────────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────── */
+body.theme-bw .rgm td.p3c{background:#fff!important;}
+.rsep td{height:3px;background:var(--green);border:none;}
+.chd-cell{background:var(--green);color:#fff;font-weight:700;font-size:8pt;height:19px;padding:2px 6px;}
+.chd-inner{display:flex;justify-content:space-between;align-items:center;height:100%;}
+.llbl{background:var(--green);color:#fff;text-align:center;font-size:7pt;font-weight:700;}
+.lpar{background:var(--gl);text-align:left;padding-left:4px!important;font-size:7pt;font-weight:700;color:var(--green);}
+.lsi{background:var(--gl);text-align:left;padding-left:4px!important;font-size:6pt;color:#555;}
+.hn{background:var(--gl);}
+.hp{background:var(--amber);}
+.sg{background:var(--gm)!important;font-weight:700;}
+.sh{background:var(--gl)!important;font-style:italic;font-size:7.5pt;}
+.sp{background:var(--amber)!important;font-weight:700;}
+.h10{border-left:3px solid var(--green)!important;}
+.sc{position:relative;background:#fff;height:34px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.sc.p3c{background-color:var(--amber);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.sinp{position:absolute;bottom:2px;left:2px;width:55%;font-size:9pt;font-weight:700;border:none;background:transparent;text-align:left;outline:none;font-family:'Arial Narrow',Arial,sans-serif;-moz-appearance:textfield;z-index:1;}
+.sinp::-webkit-inner-spin-button,.sinp::-webkit-outer-spin-button{-webkit-appearance:none;}
+.sdot{position:absolute;top:2px;right:2px;font-size:6pt;font-weight:700;color:#000;line-height:1.0;text-align:right;white-space:pre;z-index:1;}
+.plbl{position:relative;background:#fff;padding:2px 3px!important;text-align:left!important;}
+.pname{width:100%;font-weight:700;font-size:10pt;border:none;background:transparent;outline:none;line-height:1.4;padding-bottom:4px;text-align:center;font-family:'Arial Narrow',Arial,sans-serif;}
+.ptee{position:absolute;top:2px;right:3px;font-size:8.5pt;color:#555;font-style:italic;white-space:nowrap;line-height:1;}
+.glbl-wrap{display:flex;align-items:center;justify-content:center;width:100%;height:34px;}
+.glbl-inp{width:100%;border:none;background:transparent;text-align:center;font-size:10pt;font-weight:700;color:var(--green);outline:none;font-family:'Arial Narrow',Arial,sans-serif;text-transform:uppercase;padding:0 4px;line-height:1.2;}
+.ginp-fixed{background:#e8f5e0!important;color:#1a5c2e!important;font-weight:700!important;cursor:default!important;pointer-events:none!important;}
+.glbl-inp::placeholder{color:#bbb;font-weight:400;text-transform:none;}
+.ginp{width:100%;height:34px;line-height:normal;border:none;background:transparent;text-align:center;font-size:10pt;font-weight:700;font-family:'Arial Narrow',Arial,sans-serif;outline:none;-moz-appearance:textfield;padding:10px 0;box-sizing:border-box;}
+.ginp::-webkit-inner-spin-button,.ginp::-webkit-outer-spin-button{-webkit-appearance:none;}
+#back{display:none;width:11in;flex-direction:column;margin:0 auto 10px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.bhdr{background:var(--green);color:#fff;font-weight:700;font-size:9pt;padding:4px 8px;}
+.bgrid{display:grid;grid-template-columns:35% 35% 30%;border-top:2px solid var(--green);align-items:stretch;}
+.bcol{padding:6px;border-right:1px solid #ccc;display:flex;flex-direction:column;}
+.bcol:last-child{border-right:none;}
+.bst{font-size:8.5pt;font-weight:700;color:var(--green);text-transform:uppercase;margin-bottom:4px;border-bottom:1px solid var(--gm);padding-bottom:2px;}
+.btbl{width:100%;border-collapse:collapse;font-size:8pt;margin-bottom:8px;}
+.btbl td,.btbl th{border:1px solid #aaa;padding:3px 5px;text-align:center;}
+.btbl th{background:var(--gl);font-weight:700;}
+.btbl input{width:100%;border:none;background:transparent;text-align:center;font-size:8pt;font-family:'Arial Narrow',Arial,sans-serif;outline:none;}
+.bta{width:100%;border:1px solid #ccc;font-size:8pt;font-family:'Arial Narrow',Arial,sans-serif;resize:none;padding:5px;outline:none;border-radius:2px;min-height:60px;overflow:visible;box-sizing:border-box;}
+#game-notes{overflow:visible;height:auto;white-space:pre-wrap;}
+.bta p{margin:0 0 2px 0;line-height:1.35;}
+@page{size:11in 8.5in;margin:0;}
+@media print{
+  /* Allow page 2 to exist — never clip body height */
+  html,body{margin:0!important;padding:0!important;width:100%!important;height:auto!important;overflow:visible!important;}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
+  body{background:#fff!important;}
+  .no-print,#setup{display:none!important;}
+  /* originals hidden — clones handle print */
+  #card,#back{display:none!important;}
+  /* PAGE 1: front wrapper */
+  #print-front-wrap{
+    display:block!important;width:100%!important;height:auto!important;
+    margin:0!important;padding:0!important;overflow:hidden!important;
+    page-break-after:always;break-after:page;
+  }
+  /* PAGE 2: back wrapper — force new page */
+  #print-back-wrap{
+    display:block!important;width:100%!important;height:auto!important;
+    margin:0!important;padding:0!important;overflow:hidden!important;
+    page-break-before:always;break-before:page;
+  }
+  /* each clone is exactly half of Letter landscape height */
+  .print-card-clone{
+    display:block!important;width:100%!important;height:4.25in!important;
+    overflow:hidden!important;box-shadow:none!important;
+  }
+  .print-back-clone{
+    display:flex!important;flex-direction:column!important;
+    width:100%!important;height:4.25in!important;
+    overflow:hidden!important;box-shadow:none!important;
+  }
+  /* cut line between the two cards */
+  .cut-line{display:block!important;width:100%!important;height:0!important;border-top:1px dashed #999!important;margin:0!important;}
+  /* table column widths stay proportional */
+  .clbl{width:1.47in!important;}.csub{width:0.31in!important;}.cp3{width:0.28in!important;}
+  /* row heights */
+  .rpl td{height:34px!important;}.rgm td{height:34px!important;}
+  .rhdr td{height:13px!important;}.rpar td{height:11px!important;}.rsi td{height:10px!important;}
+  .chd-cell{height:15px!important;}
+  /* score cell colors */
+  .sc{background-color:#fff!important;}.sc.p3c{background-color:var(--amber)!important;}
+  input,select,textarea{border:none!important;background:transparent!important;}
+  /* back side layout */
+  .bgrid{flex:1!important;align-items:stretch!important;min-height:0!important;}
+  .bcol{display:flex!important;flex-direction:column!important;height:100%!important;min-height:0!important;}
+  .bta{height:auto!important;min-height:0!important;overflow:visible!important;}
+  /* B&W theme overrides */
+  body.theme-bw .chd-cell,body.theme-bw .llbl,body.theme-bw .bhdr{background:#000!important;color:#fff!important;}
+  body.theme-bw .rsep td{background:#000!important;}
+  body.theme-bw .sg,body.theme-bw .sh,body.theme-bw .sp,body.theme-bw .hn,body.theme-bw .hp,body.theme-bw .sc,body.theme-bw .sc.p3c{background:#fff!important;}
+}
+  body.theme-bw .chd-cell,body.theme-bw .llbl,body.theme-bw .bhdr{background:#000!important;color:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  body.theme-bw .rsep td{background:#000!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  body.theme-bw .sg,body.theme-bw .sh,body.theme-bw .sp,body.theme-bw .hn,body.theme-bw .hp,body.theme-bw .sc,body.theme-bw .sc.p3c{background:#fff!important;}
+}
+}
+body.theme-bw{--green:#000;--gl:#fff;--gm:#fff;--amber:#fff;--bdr:#000;}
+body.theme-bw .chd-cell{background:#000!important;color:#fff!important;}
+body.theme-bw .llbl{background:#000!important;color:#fff!important;}
+body.theme-bw .bhdr{background:#000!important;color:#fff!important;}
+body.theme-bw .shdr{background:#000!important;color:#fff!important;}
+body.theme-bw .lpar{background:#fff!important;color:#000!important;}
+body.theme-bw .lsi{background:#fff!important;color:#000!important;}
+body.theme-bw .hn,body.theme-bw .hp{background:#fff!important;}
+body.theme-bw .sg{background:#fff!important;font-weight:700;}
+body.theme-bw .sh{background:#fff!important;}
+body.theme-bw .sp{background:#fff!important;font-weight:700;}
+body.theme-bw .rsep td{background:#000!important;height:1px!important;}
+body.theme-bw .sc.p3c{background:#fff!important;}
+body.theme-bw #setup{border-color:#000!important;}
+body.theme-bw .pc{background:#fff!important;border-color:#ccc!important;}
+body.theme-bw .pc label{color:#000!important;}
+body.theme-bw .glbl-inp{color:#000!important;}
+body.theme-bw .bgrid{border-color:#000!important;}
+body.theme-bw .bst{color:#000!important;border-color:#000!important;}
+body.theme-bw .btbl th{background:#fff!important;}
+#btn-theme.bw-active{background:#222!important;color:#fff!important;}
+#btn-theme.color-active{background:#1a5c2e!important;color:#fff!important;}
+
+/* ── Two-panel layout ──────────────────────────────────────────────────── */
+#card{width:11in;margin:0 auto 16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);}
+#card-hdr{background:var(--green);color:#fff;font-weight:700;font-size:8pt;min-height:19px;padding:2px 6px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.card-panels{display:flex;align-items:stretch;width:100%;}
+.panel-div{width:4px;background:var(--green);flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+#sct-l{width:5.4375in;flex-shrink:0;border-collapse:collapse;table-layout:fixed;font-family:'Arial Narrow',Arial,sans-serif;}
+#sct-r{flex:1;min-width:0;border-collapse:collapse;table-layout:fixed;font-family:'Arial Narrow',Arial,sans-serif;}
+#sct-l td,#sct-r td{border:1px solid var(--bdr);padding:1px 2px;overflow:hidden;text-align:center;vertical-align:middle;}
+#sct-l .rgm td,#sct-r .rgm td{overflow:visible!important;padding:0!important;}
+.clbl-l{width:1.47in;}
+.csub-r{width:0.38in;}
+.cp3-r{width:0.28in;}
+
+/* ── v63: Four-Card Tabs ─────────────────────────────────────────────── */
+#card-tabs{display:flex;gap:4px;align-items:center;padding:5px 10px 0;background:var(--green);}
+.ctab{font-family:'Arial Narrow',Arial,sans-serif;font-size:10px;font-weight:700;
+  padding:4px 12px;border:none;border-radius:3px 3px 0 0;cursor:pointer;
+  background:#115020;color:#aed6b4;transition:background 0.15s;}
+.ctab:hover{background:#1e6e38;color:#fff;}
+.ctab.active{background:#fff;color:var(--green);}
+.csave{font-family:'Arial Narrow',Arial,sans-serif;font-size:10px;font-weight:700;
+  padding:4px 10px;border:none;border-radius:3px;cursor:pointer;
+  background:#c8a000;color:#fff;margin-left:auto;}
+.csave:hover{background:#a07800;}
+#card-slot-badge{font-size:9px;font-weight:700;color:#fff;background:rgba(0,0,0,0.35);
+  border-radius:3px;padding:1px 6px;margin-left:6px;display:inline-block;}
+/* ── MODE TOGGLE ──────────────────────────────────────────────────── */
+.mp-mode-wrap{display:inline-flex;align-items:center;gap:0;background:#e0e0e0;border-radius:3px;padding:2px;}
+.mp-mode-btn{background:transparent;color:#555;border:none;border-radius:2px;padding:3px 10px;font-size:9px;font-weight:700;cursor:pointer;font-family:'Arial Narrow',Arial,sans-serif;white-space:nowrap;}
+.mp-mode-btn.mp-active{background:var(--green);color:#fff;}
+
+/* ── MATCH HEADER BLOCK ───────────────────────────────────────────── */
+#match-hdr{display:none;background:#f5f9f5;border-bottom:2px solid var(--green);padding:5px 10px;flex-direction:column;gap:4px;}
+.mhf-row1{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.mhf-row2{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.mhf-group{display:flex;flex-direction:column;gap:1px;}
+.mhf-lbl{font-size:7pt;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;}
+.mhf-inputs{display:flex;align-items:flex-end;gap:4px;}
+.mhf-inp{font-family:'Arial Narrow',Arial,sans-serif;font-size:10pt;font-weight:700;border:none;border-bottom:1.5px solid #888;outline:none;background:transparent;color:#111;padding:0 2px;}
+.mhf-inp::placeholder{color:#bbb;font-weight:400;}
+.mhf-sel{font-family:'Arial Narrow',Arial,sans-serif;font-size:10pt;font-weight:700;border:none;border-bottom:1.5px solid #888;outline:none;background:transparent;padding:0 2px;width:0.42in;cursor:pointer;-webkit-appearance:none;appearance:none;}
+.mhf-ta .mhf-inp,.mhf-ta .mhf-sel{color:var(--green);}
+.mhf-tb .mhf-inp,.mhf-tb .mhf-sel{color:#1a3a8b;}
+.mhf-sep{font-size:10pt;font-weight:700;color:#555;padding-bottom:1px;}
+.mhf-colon{font-size:9pt;font-weight:700;color:#555;}
+.mhf-method-wrap{display:flex;align-items:center;gap:6px;margin-left:auto;}
+.mhf-method-wrap label{font-size:7pt;font-weight:700;color:var(--green);text-transform:uppercase;white-space:nowrap;}
+#mp-method{font-family:'Arial Narrow',Arial,sans-serif;font-size:9pt;font-weight:700;border:1px solid #bbb;border-radius:2px;padding:2px 4px;background:#fff;}
+body.theme-bw .mhf-ta .mhf-inp,body.theme-bw .mhf-ta .mhf-sel,
+body.theme-bw .mhf-tb .mhf-inp,body.theme-bw .mhf-tb .mhf-sel{color:#000;}
+body.theme-bw .mhf-lbl{color:#000;}
+body.theme-bw #match-hdr{background:#f0f0f0;}
+
+/* ── MATCH PLAY TABLE ROWS ────────────────────────────────────────── */
+.rmp-ta td{height:34px;border:1px solid var(--bdr);padding:0;text-align:center;vertical-align:middle;background:var(--gl);}
+.rmp-tb td{height:34px;border:1px solid var(--bdr);padding:0;text-align:center;vertical-align:middle;background:#e8f0ff;}
+.rmp-tm td{height:34px;border:1px solid var(--bdr);padding:0;text-align:center;vertical-align:middle;background:#fff8e8;}
+body.theme-bw .rmp-ta td{background:#f2f2f2;}
+body.theme-bw .rmp-tb td{background:#e8e8e8;}
+body.theme-bw .rmp-tm td{background:#f8f8f8;}
+td.mp-lbl{text-align:left!important;padding:0 0 0 4px!important;font-size:6.8pt;font-weight:700;vertical-align:middle;position:relative;}
+td.mp-lbl{font-size:10pt!important;font-weight:700!important;padding:2px 4px!important;}
+.mp-ptee{position:absolute;top:2px;right:3px;font-size:8.5pt;color:#555;font-style:italic;white-space:nowrap;line-height:1;}
+td.mp-sg{font-weight:700;}
+td.mp-hp{background:transparent;}
+body.theme-bw td.mp-hp{background:transparent;}
+td.mp-res-hdr{background:#fff8e8!important;color:#333!important;font-size:7pt;font-weight:700;text-align:center;vertical-align:middle;border:1.5px solid #c8a000!important;letter-spacing:0.5px;}
+#sct-r td.mp-res-hdr{background:#fff8e8!important;color:#333!important;border:1.5px solid #c8a000!important;}
+td.mp-res-cell,#sct-r td.mp-res-cell{background:#fff8e8!important;border:1.5px solid #c8a000!important;font-size:8.5pt!important;font-weight:700!important;color:#222!important;vertical-align:middle!important;text-align:center!important;padding:4px 2px!important;}
+body.theme-bw td.mp-res-cell,body.theme-bw #sct-r td.mp-res-cell{background:#f8f8f8!important;border:1.5px solid #999!important;color:#000!important;}
+body.theme-bw td.mp-res-hdr{background:#f8f8f8!important;color:#000!important;border:1.5px solid #999!important;}
+
+/* Dot indicator inside Match Play cells */
+.rmp-ta td .dot-ind,.rmp-tb td .dot-ind{font-size:5pt;line-height:1;color:var(--green);position:absolute;top:1px;right:2px;}
+.rmp-ta td,.rmp-tb td{position:relative;}
+
+/* ── BACK SIDE — MP RULES ─────────────────────────────────────────── */
+#back-stableford{}
+#back-mp-rules{}
+
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script>
+(function(){
+})();
+</script>
+</head>
+<body data-id="0" class="theme-color">
+<div data-id="1" id="setup" class="no-print">
+  <div id="card-tabs">
+    <button class="ctab active" data-ci="0" onclick="switchCard(0)">Card 1</button>
+    <button class="ctab" data-ci="1" onclick="switchCard(1)">Card 2</button>
+    <button class="ctab" data-ci="2" onclick="switchCard(2)">Card 3</button>
+    <button class="ctab" data-ci="3" onclick="switchCard(3)">Card 4</button>
+    <button class="csave" id="btn-save-card" onclick="saveCardAndConfirm()">💾 Save Card</button>
+  </div>
+  <div data-id="2" class="shdr" id="setup-hdr-toggle">
+    <span data-id="3">⛳ LG3 Scorecard Setup — <span id="hdr-course-name">Tampa Palms G&CC</span><span id="card-slot-badge">Card 1</span></span>
+    <span data-id="4" id="stog">▲</span>
+  </div>
+  <div data-id="5" class="sbody" id="sbody">
+    <div class="srow" id="course-selector-row" style="margin-bottom:4px;align-items:center;gap:8px;">
+      <div class="sf">
+        <label style="font-size:9px;font-weight:700;color:#555;text-transform:uppercase;">Course</label>
+        <select id="course-select" style="font-family:'Arial Narrow',Arial,sans-serif;font-size:11px;font-weight:700;border:1.5px solid #1a5c2e;border-radius:3px;padding:3px 6px;color:#1a5c2e;background:#f5f9f5;min-width:180px;">
+          <option value="tampa">Tampa Palms G&amp;CC</option>
+          <option value="hunters">Hunter's Green CC</option>
+        </select>
+      </div>
+    </div>
+    <div class="srow" id="game-selector-row" style="margin-bottom:2px;align-items:center;gap:8px;">
+      <div class="sf">
+        <label style="font-size:9px;font-weight:700;color:#555;text-transform:uppercase;">Game</label>
+        <select id="game-select" style="font-family:'Arial Narrow',Arial,sans-serif;font-size:11px;font-weight:700;border:1.5px solid #1a5c2e;border-radius:3px;padding:3px 6px;color:#1a5c2e;background:#f5f9f5;min-width:220px;">
+          <option value="none">— Select Game —</option>
+          <option value="arizona">Arizona Shuffle</option>
+          <option value="montana">Montana Mayhem</option>
+          <option value="one-gross-two-net">One Gross / Two Low Net</option>
+          <option value="lone-ranger">Lone Ranger / Scramble</option>
+          <option value="balls-15-20">15 / 20 Balls</option>
+          <option value="balls-15-20-stbl">15/20 Balls Stableford</option>
+          <option value="two-low-net">Two Low Net</option>
+          <option value="two-low-net-slop">Two Low Net + Slop</option>
+          <option value="three-low-net">Three Low Net</option>
+        </select>
+      </div>
+    </div>
+    <div data-id="6" class="srow">
+      <div data-id="7" class="sf">
+        <label data-id="8">Event Name</label>
+        <input data-id="9" type="text" id="evtName" value="LG3 Weekly Game" style="width:180px"/>
+      </div>
+      <div data-id="10" class="sf">
+        <label data-id="11">Date</label>
+        <input data-id="12" type="date" id="evtDate" style="width:130px"/>
+      </div>
+      <div data-id="13" class="sf" id="tp-tt-wrap">
+        <label data-id="14">Tee Time</label>
+        <select data-id="15" id="teeTime" style="width:100px">
+          <option data-id="16" value="">—</option>
+          <option data-id="17" value="8:08 AM">8:08 AM</option>
+          <option data-id="18" value="8:16 AM">8:16 AM</option>
+          <option data-id="19" value="8:24 AM">8:24 AM</option>
+          <option data-id="20" value="8:32 AM">8:32 AM</option>
+        </select>
+      </div>
+      <div id="manual-tt-wrap" style="display:none;flex-direction:row;gap:6px;align-items:flex-end;">
+        <div class="sf"><label style="font-size:9px;font-weight:700;color:#555;text-transform:uppercase;">Tee Time 1</label><input type="text" id="manualTT0" placeholder="e.g. 8:12 AM" style="font-family:'Arial Narrow',Arial,sans-serif;font-size:10px;border:1px solid #bbb;border-radius:2px;padding:2px 4px;width:88px;" oninput="refreshHeader();saveState();"/></div>
+        <div class="sf"><label style="font-size:9px;font-weight:700;color:#555;text-transform:uppercase;">Tee Time 2</label><input type="text" id="manualTT1" placeholder="e.g. 8:21 AM" style="font-family:'Arial Narrow',Arial,sans-serif;font-size:10px;border:1px solid #bbb;border-radius:2px;padding:2px 4px;width:88px;" oninput="saveState();"/></div>
+        <div class="sf"><label style="font-size:9px;font-weight:700;color:#555;text-transform:uppercase;">Tee Time 3</label><input type="text" id="manualTT2" placeholder="e.g. 8:30 AM" style="font-family:'Arial Narrow',Arial,sans-serif;font-size:10px;border:1px solid #bbb;border-radius:2px;padding:2px 4px;width:88px;" oninput="saveState();"/></div>
+        <div class="sf"><label style="font-size:9px;font-weight:700;color:#555;text-transform:uppercase;">Tee Time 4</label><input type="text" id="manualTT3" placeholder="e.g. 8:39 AM" style="font-family:'Arial Narrow',Arial,sans-serif;font-size:10px;border:1px solid #bbb;border-radius:2px;padding:2px 4px;width:88px;" oninput="saveState();"/></div>
+      </div>
+    </div>
+    <div data-id="21" class="pgrid">
+      <div data-id="22" class="pc">
+        <label data-id="23">Player 1</label>
+        <input data-id="24" type="text" id="p0name" placeholder="Player Name"/>
+        <label data-id="25">GHIN Index</label>
+        <input data-id="26" type="number" id="p0ghin" placeholder="0.0" min="0" max="54" step="0.1"/>
+        <label data-id="27">Tee</label>
+        <select data-id="28" id="p0tee">
+          <option data-id="29" value="1">1 – Gold</option>
+          <option data-id="30" value="2" selected>2 – Blue</option>
+          <option data-id="31" value="3">3 – Blue/White</option>
+          <option data-id="32" value="4">4 – White</option>
+          <option data-id="33" value="5">5 – Red</option>
+          <option value="6">6 – Combo</option>
+        </select>
+        <div data-id="34" class="chd" id="p0ch">CH: — | PH: —</div>
+      </div>
+      <div data-id="35" class="pc">
+        <label data-id="36">Player 2</label>
+        <input data-id="37" type="text" id="p1name" placeholder="Player Name"/>
+        <label data-id="38">GHIN Index</label>
+        <input data-id="39" type="number" id="p1ghin" placeholder="0.0" min="0" max="54" step="0.1"/>
+        <label data-id="40">Tee</label>
+        <select data-id="41" id="p1tee">
+          <option data-id="42" value="1">1 – Gold</option>
+          <option data-id="43" value="2" selected>2 – Blue</option>
+          <option data-id="44" value="3">3 – Blue/White</option>
+          <option data-id="45" value="4">4 – White</option>
+          <option data-id="46" value="5">5 – Red</option>
+          <option value="6">6 – Combo</option>
+        </select>
+        <div data-id="47" class="chd" id="p1ch">CH: — | PH: —</div>
+      </div>
+      <div data-id="48" class="pc">
+        <label data-id="49">Player 3</label>
+        <input data-id="50" type="text" id="p2name" placeholder="Player Name"/>
+        <label data-id="51">GHIN Index</label>
+        <input data-id="52" type="number" id="p2ghin" placeholder="0.0" min="0" max="54" step="0.1"/>
+        <label data-id="53">Tee</label>
+        <select data-id="54" id="p2tee">
+          <option data-id="55" value="1">1 – Gold</option>
+          <option data-id="56" value="2" selected>2 – Blue</option>
+          <option data-id="57" value="3">3 – Blue/White</option>
+          <option data-id="58" value="4">4 – White</option>
+          <option data-id="59" value="5">5 – Red</option>
+          <option value="6">6 – Combo</option>
+        </select>
+        <div data-id="60" class="chd" id="p2ch">CH: — | PH: —</div>
+      </div>
+      <div data-id="61" class="pc">
+        <label data-id="62">Player 4</label>
+        <input data-id="63" type="text" id="p3name" placeholder="Player Name"/>
+        <label data-id="64">GHIN Index</label>
+        <input data-id="65" type="number" id="p3ghin" placeholder="0.0" min="0" max="54" step="0.1"/>
+        <label data-id="66">Tee</label>
+        <select data-id="67" id="p3tee">
+          <option data-id="68" value="1">1 – Gold</option>
+          <option data-id="69" value="2" selected>2 – Blue</option>
+          <option data-id="70" value="3">3 – Blue/White</option>
+          <option data-id="71" value="4">4 – White</option>
+          <option data-id="72" value="5">5 – Red</option>
+          <option value="6">6 – Combo</option>
+        </select>
+        <div data-id="73" class="chd" id="p3ch">CH: — | PH: —</div>
+      </div>
+    </div>
+    <div data-id="74" class="brow">
+      <div class="mp-mode-wrap"><button id="btn-stroke" class="mp-mode-btn mp-active">⛳ Stroke Play</button><button id="btn-match" class="mp-mode-btn">🏆 Match Play</button></div>
+      <button data-id="76" class="bback" id="btn-back">↕ Back Side</button>
+      <button class="bback" id="btn-reset-card" style="background:#8b1a1a;">⟳ Reset Card</button>
+      <div data-id="77" class="printer-mode-wrap">
+        <label data-id="78">🖨 Mode:</label>
+        <select data-id="79" id="printer-mode">
+          <option data-id="80" value="auto">Auto-Duplex</option>
+          <option data-id="81" value="manual">Manual Two-Pass</option>
+        </select>
+      </div>
+      <button data-id="82" id="btn-theme" class="bprint color-active" style="background:#1a5c2e;min-width:110px;">🎨 Color Mode</button>
+      <button class="bprint" id="btn-print-all" style="background:#1a3a8b;min-width:120px;">🖨 Print All Cards</button>
+      <label style="display:flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#333;cursor:pointer;white-space:nowrap;padding:0 4px;"><input type="checkbox" id="sync-game-rows" style="accent-color:var(--green);width:13px;height:13px;cursor:pointer;"> Sync game rows → Cards 2–4</label>
+      <button data-id="83" class="bprint" id="btn-print-both" style="background:#1a5c2e;">🖨 Print Both</button>
+      <button data-id="84" class="bprint" id="btn-print-front" style="background:#1a5c2e;display:none;">🖨 Print Front</button>
+      <button data-id="85" class="bprint" id="btn-print-back" style="background:#1a5c2e;display:none;">🖨 Print Back</button>
+    </div>
+  </div>
+</div>
+<div id="card">
+  <div id="card-hdr" class="chd-cell"><div class="chd-inner"><span style="font-size:10.5pt;font-weight:700;letter-spacing:0.5px;">LG3 · <span id="card-course-name">Tampa Palms G&CC</span></span><span id="hdr-mid" style="font-size:8pt;font-weight:700;"></span><span id="hdr-right" style="font-size:8pt;"></span></div></div>
+  <!-- Match Header Block (Match Play only) -->
+  <div id="match-hdr">
+    <div class="mhf-row1">
+      <div class="mhf-group">
+        <span class="mhf-lbl">Match</span>
+        <div class="mhf-inputs">
+          <span id="mp-match-label" class="mhf-inp" style="width:1.6in;display:inline-block;border-bottom:1.5px solid #888;">—</span>
+        </div>
+      </div>
+      <div class="mhf-group mhf-ta">
+        <div class="mhf-inputs">
+          <select id="mp-ta-lt" class="mhf-sel"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select>
+          <span class="mhf-colon" style="margin:0 4px;">:</span>
+          <span id="mp-ta-names" class="mhf-inp" style="width:2.6in;display:inline-block;border-bottom:1.5px solid #888;color:var(--green);">Player 1 / Player 2</span>
+        </div>
+      </div>
+      <div class="mhf-group mhf-tb">
+        <div class="mhf-inputs">
+          <select id="mp-tb-lt" class="mhf-sel"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select>
+          <span class="mhf-colon" style="margin:0 4px;">:</span>
+          <span id="mp-tb-names" class="mhf-inp" style="width:2.6in;display:inline-block;border-bottom:1.5px solid #888;color:#1a3a8b;">Player 3 / Player 4</span>
+        </div>
+      </div>
+      <div class="mhf-method-wrap">
+        <label>Handicap Method:</label>
+        <select id="mp-method">
+          <option value="100" selected>100%</option>
+          <option value="90">90%</option>
+          <option value="100lo">100% — Off Lowest</option>
+          <option value="90lo">90% — Off Lowest</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="card-panels">
+    <table id="sct-l">
+      <colgroup>
+        <col class="clbl-l"/>
+        <col/><col/><col/><col/><col/><col/><col/><col/><col/>
+        <col class="csub-r"/>
+      </colgroup>
+      <tbody id="scbody-l"></tbody>
+    </table>
+    <div class="panel-div"></div>
+    <table id="sct-r">
+      <colgroup id="colgr-r">
+        <col/><col/><col/><col/><col/><col/><col/><col/><col/>
+        <col class="csub-r"/><col class="csub-r"/>
+        <col class="cp3-r"/><col class="cp3-r"/>
+      </colgroup>
+      <tbody id="scbody-r"></tbody>
+    </table>
+  </div>
+</div>
+<div data-id="114" id="back">
+  <div data-id="115" class="bhdr">LG3 · Game Card — <span id="back-course-name">Tampa Palms G&CC</span> — Back Side</div>
+  <div data-id="116" class="bgrid" id="back-grid">
+    <div data-id="117" class="bcol">
+      <div data-id="118" class="bst">USGA Rules of Golf apply except where modified by the LG3 Local Rules below.</div>
+      <div data-id="119" class="bta" id="rules-textarea" contenteditable="true" spellcheck="false">
+        <p data-id="120">• <b data-id="121">Root Relief</b> — Free relief if a root or large rock affects swing, stance, or safety.</p>
+        <p data-id="122">• <b data-id="123">Wildlife Relief</b> — Free relief from gators, snakes, or any unsafe wildlife interactions.</p>
+        <p data-id="124">• <b data-id="125">Embedded Ball Relief</b> — Through the green, free relief.</p>
+        <p data-id="126">• <b data-id="127">Cart Path Relief</b> — Free relief when the path affects lie, stance, or swing.</p>
+        <p data-id="128">• <b data-id="129">Divot Relief</b> — Free relief from a sanded or unfilled divot.</p>
+        <p data-id="130">• <b data-id="131">Safety Relief</b> — Free relief at nearest safe point, no closer to the hole.</p>
+        <p data-id="132">• <b data-id="133">Gimmies</b> — Inside the leather (33–34 in). Add one stroke and pick up.</p>
+        <p data-id="134">• <b data-id="135">Hole 18 Water Hazard</b> — If your ball enters the water hazard on Hole 18, you may take a drop on the opposite side of the hazard (right of the cart path). The drop point must be no closer to the hole and equidistant from the pin to where your ball last crossed the margin of the hazard.</p>
+        <p data-id="136">• <b data-id="137">Posting to GHIN</b> — All players must post their score to GHIN after the round. If you used mulligans (especially on Par 3s), you must add those strokes back to your final score before submitting to GHIN.</p>
+      </div>
+    </div>
+    <div data-id="138" class="bcol">
+      <div data-id="139" class="bst" id="back-ctp-title" style="margin-top:4px">Closest to the Pin — CTP</div>
+      <div data-id="140" id="back-ctp-boxes" style="display:flex;flex-direction:column;gap:4px;margin-top:3px;">
+        <!-- CTP holes rendered dynamically by buildCTPPanel() -->
+      </div>
+<div id="back-stableford">      <div data-id="149" class="bst" style="margin-top:6px">Stableford Points Chart</div>
+      <select data-id="150" id="stbl-sel" style="width:100%;font-family:'Arial Narrow',Arial,sans-serif;font-size:9pt;border:1px solid #bbb;border-radius:2px;padding:3px;margin-bottom:5px;margin-top:3px;">
+        <option data-id="151" value="" selected>— Not in play this week —</option>
+        <option data-id="152" value="std">Standard Stableford</option>
+        <option data-id="153" value="mod">Modified Stableford</option>
+        <option data-id="154" value="lg3">LG3 Stableford</option>
+        <option value="lg3b">LG3 Modified Stableford 2</option>
+      </select>
+      <table data-id="155" id="stbl-tbl" class="btbl"><thead data-id="156" id="stbl-head"></thead><tbody data-id="157" id="stbl-body"></tbody></table></div>
+      <div id="back-mp-rules" style="display:none;">
+      <div class="bst" style="margin-top:4px;">LG3 MATCH PLAY — LOCAL RULES</div>
+      <div class="bta" style="font-size:8pt;line-height:1.45;">
+        <p>• <b>Format</b> — Two-man Best Ball. Each player plays their own ball. Lowest NET score on each team wins the hole.</p>
+        <p>• <b>Handicaps</b> — Strokes fall where they fall. Dots applied per selected method.</p>
+        <p>• <b>Picking Up</b> — A player may pick up once out of the hole. Record the score they would have reasonably made.</p>
+        <p>• <b>Concessions</b> — Putts, holes, and the match may be conceded at any time. A conceded putt is considered holed.</p>
+        <p>• <b>Order of Play</b> — Honor goes to the team that won the previous hole. Ball farthest from hole plays first after tee shots.</p>
+        <p>• <b>Halved Holes</b> — If both teams tie NET, the hole is halved (H).</p>
+        <p>• <b>All Holes Must Be Played</b> — Even if match ends early, all 18 holes must be completed for tiebreak purposes.</p>
+        <p>• <b>Out of Bounds / Lost Ball</b> — Stroke-and-distance applies. The hole is not automatically lost.</p>
+        <p>• <b>No Provisionals</b> — If lost or OB, replay from the previous spot with one penalty stroke.</p>
+        <p>• <b>Unplayable Ball</b> — One penalty stroke using any of the three standard options.</p>
+        <p>• <b>Loose Impediments</b> — May be removed anywhere without penalty. Ball must not move.</p>
+        <p>• <b>Movable Obstructions</b> — May be removed without penalty. Replace ball if it moves.</p>
+        <p>• <b>Water Hazards</b> — One penalty stroke: play as it lies or take standard relief.</p>
+        <p>• <b>Advice</b> — You may advise your partner but not your opponents. No physical assistance with stance or swing.</p>
+      </div>
+    </div>
+    </div>
+    <div data-id="158" class="bcol" id="back-gamenotes-col">
+      <div data-id="159" class="bst">Weekly Game Notes</div>
+      <div id="game-notes" class="bta" contenteditable="true" spellcheck="false"></div>
+    </div>
+  </div>
+</div>
+<script>
+var COURSE_PROFILES={
+  'tampa':{
+    courseName:'Tampa Palms G&CC',
+    holePar:[4,3,4,4,5,4,4,5,3,4,4,5,3,4,4,5,3,4],
+    holeHandicap:[4,18,14,2,6,16,8,12,10,9,3,15,13,11,1,5,17,7],
+    par3Holes:[1,8,12,16],
+    tees:[
+      {num:1,name:'Gold',rating:75.4,slope:143},
+      {num:2,name:'Blue',rating:72.8,slope:140},
+      {num:3,name:'Blue/White',rating:71.6,slope:136},
+      {num:4,name:'White',rating:69.7,slope:133},
+      {num:5,name:'Red',rating:65.6,slope:122},
+      {num:6,name:'Combo',rating:67.4,slope:128}
+    ]
+  },
+  'hunters':{
+    courseName:"Hunter's Green CC",
+    holePar:[4,4,5,3,4,4,3,4,5,4,3,5,4,3,4,5,4,4],
+    holeHandicap:[17,11,9,13,7,1,15,3,5,12,14,10,18,16,4,2,6,8],
+    par3Holes:[3,6,10,13],
+    tees:[
+      {num:1,name:'Gold',rating:73.5,slope:134},
+      {num:2,name:'Blue',rating:71.8,slope:132},
+      {num:3,name:'Blue/White',rating:70.8,slope:130},
+      {num:4,name:'White',rating:70.2,slope:128},
+      {num:5,name:'Green',rating:66.4,slope:116},
+      {num:6,name:'White/Green',rating:68.1,slope:122}
+    ]
+  }
+};
+var _activeCourseKey=localStorage.getItem('lg3_course')||'tampa';
+var _cp=COURSE_PROFILES[_activeCourseKey];
+var PAR=_cp.holePar.slice();
+var SI=_cp.holeHandicap.slice();
+var PAR3=_cp.par3Holes.slice();
+var TEES=_cp.tees.map(function(t){return {num:t.num,name:t.name,rating:t.rating,slope:t.slope};});
+// ── GAME PROFILES (v89) ─────────────────────────────────────────────────────
+var GAME_PROFILES=[
+  {id:'none',gameName:'— Select Game —',rows:[
+    {label:'',type:'labelOnly'},{label:'',type:'labelOnly'},
+    {label:'',type:'labelOnly'},{label:'',type:'labelOnly'}]},
+  {id:'arizona',gameName:'Arizona Shuffle',rows:[
+    {label:'#Scores',type:'perHoleValues',values:[3,4,3,3,2,3,3,2,4,3,3,2,4,3,3,2,4,3]},
+    {label:'Total',type:'labelOnly'},
+    {label:'+/- per hole',type:'labelOnly'},
+    {label:'+/- cumulative',type:'labelOnly'}]},
+  {id:'montana',gameName:'Montana Mayhem',rows:[
+    {label:'#Scores',type:'perHoleValues',values:[3,2,3,3,4,3,3,4,2,3,3,4,2,3,3,4,2,3]},
+    {label:'Total',type:'labelOnly'},
+    {label:'+/- per hole',type:'labelOnly'},
+    {label:'+/- cumulative',type:'labelOnly'}]},
+  {id:'one-gross-two-net',gameName:'One Gross / Two Low Net',rows:[
+    {label:'One Gross',type:'labelOnly'},{label:'Net #1',type:'labelOnly'},
+    {label:'Net #2',type:'labelOnly'},{label:'+/- per hole',type:'labelOnly'}]},
+  {id:'lone-ranger',gameName:'Lone Ranger / Scramble',rows:[
+    {label:'Lone Ranger Net',type:'labelOnly'},{label:'Scramble Gross',type:'labelOnly'},
+    {label:'Total',type:'labelOnly'},{label:'+/- per hole',type:'labelOnly'}]},
+  {id:'balls-15-20',gameName:'15 / 20 Balls',rows:[
+    {label:'# Scores',type:'labelOnly'},{label:'Total',type:'labelOnly'},
+    {label:'+/- per hole',type:'labelOnly'},{label:'+/- cumulative',type:'labelOnly'}]},
+  {id:'balls-15-20-stbl',gameName:'15/20 Balls Stableford',specialLayout:'stableford-pts',rows:[
+    {label:'# Scores',type:'labelOnly'},
+    {label:'Total Pts / Hole',type:'labelOnly'},
+    {label:'Cumulative',type:'labelOnly'},
+    {label:'',type:'labelOnly'}]},
+  {id:'two-low-net',gameName:'Two Low Net',rows:[
+    {label:'Net #1',type:'labelOnly'},{label:'Net #2',type:'labelOnly'},
+    {label:'Total',type:'labelOnly'},{label:'+/- per hole',type:'labelOnly'}]},
+  {id:'two-low-net-slop',gameName:'Two Low Net + Slop',rows:[
+    {label:'Net #1',type:'labelOnly'},{label:'Net #2',type:'labelOnly'},
+    {label:'Slop',type:'labelOnly'},{label:'+/- per hole',type:'labelOnly'}]},
+  {id:'three-low-net',gameName:'Three Low Net',rows:[
+    {label:'Net #1',type:'labelOnly'},{label:'Net #2',type:'labelOnly'},
+    {label:'Net #3',type:'labelOnly'},{label:'+/- per hole',type:'labelOnly'}]}
+];
+var _activeGameId='none'; // v91.2: always start at Select Game
+// ─────────────────────────────────────────────────────────────────────────────
+// ── FOUR-CARD STORE (v63) ───────────────────────────────────────────────
+var activeCard=0;
+
+
+// ════════════════════════════════════════════════════════════════════════
+// SHARED HANDICAP MODULE (v73)
+// ════════════════════════════════════════════════════════════════════════
+
+// Calculate course handicap using existing calcCH engine
+function mpCalcCH(ghin, tee){
+  return calcCH(ghin, tee);
+}
+
+// Apply Match Play handicap method → returns array of 4 adjusted play handicaps
+// players = [{ghin, tee}, ...]  (indices 0=A1,1=A2,2=B1,3=B2)
+function mpCalcPlayHandicaps(players, method){
+  var chs = players.map(function(p){ return mpCalcCH(p.ghin||'', p.tee||'2'); });
+  var phs;
+  if(method==='100'){
+    phs = chs.slice();
+  } else if(method==='90'){
+    phs = chs.map(function(ch){ return Math.round(ch*0.90); });
+  } else if(method==='100lo'){
+    var lo = Math.min.apply(null, chs);
+    phs = chs.map(function(ch){ return Math.max(0,ch-lo); });
+  } else { // 90lo
+    var ch90 = chs.map(function(ch){ return Math.round(ch*0.90); });
+    var lo90 = Math.min.apply(null, ch90);
+    phs = ch90.map(function(ch){ return Math.max(0,ch-lo90); });
+  }
+  return phs;
+}
+
+// Allocate dots per hole for a given play handicap (reuses dotCount logic)
+function mpDotCount(holeIdx, ph){ return dotCount(holeIdx, ph); }
+
+// ════════════════════════════════════════════════════════════════════════
+// setMode() — switch active card front layout
+// skipRebuild=true when called from loadCardFromStore
+// ════════════════════════════════════════════════════════════════════════
+function setMode(mode, skipRebuild){
+  CARDS[activeCard].mode = mode;
+  // Toggle buttons
+  var bs=document.getElementById('btn-stroke'), bm=document.getElementById('btn-match');
+  if(bs){ bs.classList.toggle('mp-active', mode==='stroke'); }
+  if(bm){ bm.classList.toggle('mp-active', mode==='match'); }
+  // Match header
+  var mh=document.getElementById('match-hdr');
+  if(mh) mh.style.display = mode==='match' ? 'flex' : 'none';
+  // Back side sections
+  var isMP = mode==='match';
+  // Back grid: switch between 3-col (SP) and 2-col (MP)
+  var bGrid=document.getElementById('back-grid');
+  if(bGrid) bGrid.style.gridTemplateColumns = isMP ? '1fr 1fr' : '35% 35% 30%';
+  // SP-only elements — hidden in Match Play
+  var bStbl = document.getElementById('back-stableford');
+  var bCTPt = document.getElementById('back-ctp-title');
+  var bCTPb = document.getElementById('back-ctp-boxes');
+  var bGN   = document.getElementById('back-gamenotes-col');
+  if(bStbl) bStbl.style.display = isMP ? 'none' : '';
+  if(bCTPt) bCTPt.style.display = isMP ? 'none' : '';
+  if(bCTPb) bCTPb.style.display = isMP ? 'none' : '';
+  if(bGN)   bGN.style.display   = isMP ? 'none' : '';
+  // MP-only element — shown in Match Play
+  var bMPR = document.getElementById('back-mp-rules');
+  if(bMPR)  bMPR.style.display  = isMP ? 'block' : 'none';
+  // v92: disable game dropdown in Match Play, re-enable in Stroke Play
+  var _gsel=document.getElementById('game-select');
+  if(_gsel){
+    _gsel.disabled=isMP;
+    _gsel.title=isMP?'Game selection applies to Stroke Play only.':'';
+    _gsel.style.opacity=isMP?'0.45':'1';
+    _gsel.style.cursor=isMP?'not-allowed':'pointer';
+    _gsel.style.pointerEvents=isMP?'none':'';
+  }
+  if(!skipRebuild){
+    if(mode==='match'){ buildMatchPlayTable(); }
+    else { buildTable(); wireTableEvents(); }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// buildMatchPlayTable() — Match Play front layout
+// Row order: A1, A2, Team A BB | MATCH | Team B BB, B1, B2
+// ════════════════════════════════════════════════════════════════════════
+function buildMatchPlayTable(){
+  var tbl=document.getElementById('scbody-l');
+  var tbr=document.getElementById('scbody-r');
+  tbl.innerHTML=''; tbr.innerHTML='';
+
+  // Right panel: remove P3 cols, add result col
+  var cg=document.getElementById('colgr-r');
+  if(cg) cg.innerHTML='<col/><col/><col/><col/><col/><col/><col/><col/><col/>'
+    +'<col class="csub-r"/><col class="csub-r"/><col style="width:0.58in;"/>';
+
+  function th(txt,cls){var td=document.createElement('td');td.textContent=txt;if(cls)td.className=cls;return td;}
+  function td(cls){var t=document.createElement('td');if(cls)t.className=cls;return t;}
+  function sep(n){var tr=document.createElement('tr');tr.className='rsep';var c=document.createElement('td');c.colSpan=n;tr.appendChild(c);return tr;}
+
+  var PAR_L=PAR.slice(0,9), PAR_R=PAR.slice(9,18);
+  var HCP_L=SI.slice(0,9), HCP_R=SI.slice(9,18);
+  var HP_L=PAR3.filter(function(h){return h<9;}), HP_R=PAR3.filter(function(h){return h>=9;}).map(function(h){return h-9;}); // 0-based indices of par-3 holes
+
+  // ── LEFT PANEL ───────────────────────────────────────────────────
+  // Header rows
+  var rh=document.createElement('tr'); rh.className='rhdr';
+  rh.appendChild(th('HOLE','llbl'));
+  [1,2,3,4,5,6,7,8,9].forEach(function(n,i){rh.appendChild(th(n,HP_L.includes(i)?'hp':''));});
+  rh.appendChild(th('OUT','sg')); tbl.appendChild(rh);
+
+  var rp=document.createElement('tr'); rp.className='rpar';
+  rp.appendChild(th('PAR','llbl'));
+  PAR_L.forEach(function(v,i){rp.appendChild(th(v,HP_L.includes(i)?'hp':''));});
+  rp.appendChild(th(PAR.slice(0,9).reduce(function(a,b){return a+b;},0),'sg')); tbl.appendChild(rp);
+
+  var rd=document.createElement('tr'); rd.className='rsi';
+  rd.appendChild(th('HDCP','llbl'));
+  HCP_L.forEach(function(v,i){rd.appendChild(th(v,HP_L.includes(i)?'hp':''));});
+  rd.appendChild(th('','sg')); tbl.appendChild(rd);
+  tbl.appendChild(sep(11));
+
+  // Data row definitions
+  // clsRow=TR class, lblId=id of label cell, lbl=static label part, clsRow for cells
+  var ROWS=[
+    {id:'mp-ra1', cls:'rmp-ta', lblId:'mp-la1', isPlayer:true, playerIdx:0},
+    {id:'mp-ra2', cls:'rmp-ta', lblId:'mp-la2', isPlayer:true, playerIdx:1},
+    {id:'mp-rbb-a', cls:'rmp-ta', lblId:'mp-lbb-a', isPlayer:false, italic:true},
+    {sep:true},
+    {id:'mp-rhw', cls:'rmp-tm', lblId:'mp-lhw', isPlayer:false, label:'HOLE RESULTS', green:true},
+    {id:'mp-rms', cls:'rmp-tm', lblId:'mp-lms', isPlayer:false, label:'MATCH STATUS', green:true},
+    {sep:true},
+    {id:'mp-rbb-b', cls:'rmp-tb', lblId:'mp-lbb-b', isPlayer:false, italic:true},
+    {id:'mp-rb1', cls:'rmp-tb', lblId:'mp-lb1', isPlayer:true, playerIdx:2},
+    {id:'mp-rb2', cls:'rmp-tb', lblId:'mp-lb2', isPlayer:true, playerIdx:3},
+  ];
+
+  ROWS.forEach(function(row){
+    if(row.sep){tbl.appendChild(sep(11));return;}
+    var tr=document.createElement('tr'); tr.className=row.cls; tr.id=row.id;
+    var lc=document.createElement('td');
+    lc.className='mp-lbl'; lc.id=row.lblId;
+    if(row.green) lc.style.color='var(--green)';
+    // italic removed — all labels use uniform upright 10pt bold
+    // row.small removed — all labels use uniform 10pt bold
+    // Use a named span for the label text so mp-ptee span survives label sync
+    var lns=document.createElement('span');lns.id=row.lblId+'-txt';lns.textContent=row.label||'';
+    lc.appendChild(lns);
+    if(row.isPlayer){
+      var ts=document.createElement('span');ts.className='mp-ptee';
+      ts.id='mp-ptee-'+row.playerIdx;ts.textContent='';
+      lc.appendChild(ts);
+    }
+    tr.appendChild(lc);
+    for(var h=0;h<9;h++){
+      var c=document.createElement('td'); // no mp-hp class — no amber in Match Play
+      if(row.isPlayer){
+        var ds=document.createElement('span');ds.className='dot-ind';ds.id='mpdot-'+row.playerIdx+'-'+h;
+        c.appendChild(ds);
+      }
+      tr.appendChild(c);
+    }
+    var sg=document.createElement('td'); sg.className='mp-sg'; tr.appendChild(sg);
+    tbl.appendChild(tr);
+  });
+
+  // ── RIGHT PANEL ──────────────────────────────────────────────────
+  var rhr=document.createElement('tr'); rhr.className='rhdr';
+  [10,11,12,13,14,15,16,17,18].forEach(function(n,i){rhr.appendChild(th(n,HP_R.includes(i)?'hp':''));});
+  rhr.appendChild(th('IN','sg')); rhr.appendChild(th('TOT','sg'));
+  // Result header — rowspan covers all body rows
+  var resTH=document.createElement('td'); resTH.className='mp-res-hdr'; resTH.rowSpan=14; resTH.textContent='RESULT';
+  rhr.appendChild(resTH); tbr.appendChild(rhr);
+
+  var rpr=document.createElement('tr'); rpr.className='rpar';
+  PAR_R.forEach(function(v,i){rpr.appendChild(th(v,HP_R.includes(i)?'hp':''));});
+  rpr.appendChild(th(PAR.slice(9,18).reduce(function(a,b){return a+b;},0),'sg')); rpr.appendChild(th(PAR.reduce(function(a,b){return a+b;},0),'sg')); tbr.appendChild(rpr);
+
+  var rdr=document.createElement('tr'); rdr.className='rsi';
+  HCP_R.forEach(function(v,i){rdr.appendChild(th(v,HP_R.includes(i)?'hp':''));});
+  rdr.appendChild(th('','sg')); rdr.appendChild(th('','sg')); tbr.appendChild(rdr);
+  tbr.appendChild(sep(11));
+
+  ROWS.forEach(function(row){
+    if(row.sep){tbr.appendChild(sep(11));return;}
+    var tr=document.createElement('tr'); tr.className=row.cls;
+    for(var h=0;h<9;h++){
+      var c=document.createElement('td'); // no mp-hp — no amber in Match Play
+      if(row.isPlayer){
+        var ds=document.createElement('span');ds.className='dot-ind';ds.id='mpdot-'+row.playerIdx+'-'+(h+9);
+        c.appendChild(ds);
+      }
+      tr.appendChild(c);
+    }
+    tr.appendChild(th('','mp-sg')); tr.appendChild(th('','mp-sg')); tbr.appendChild(tr);
+  });
+
+  // Sync row labels from header, then render dots
+  mpSyncLabels();
+  mpRenderDots();
+}
+
+// ── Live-sync row labels from Match Header inputs ─────────────────────
+function mpSyncLabels(){
+  var taLt=(document.getElementById('mp-ta-lt')||{}).value||'A';
+  var tbLt=(document.getElementById('mp-tb-lt')||{}).value||'B';
+  // Player names come from the setup panel — same inputs as Stroke Play
+  var taP1=(document.getElementById('p0name')||{}).value||'Player 1';
+  var taP2=(document.getElementById('p1name')||{}).value||'Player 2';
+  var tbP1=(document.getElementById('p2name')||{}).value||'Player 3';
+  var tbP2=(document.getElementById('p3name')||{}).value||'Player 4';
+  // Target -txt child span so mp-ptee sibling span is preserved
+  function set(id,txt){var el=document.getElementById(id+'-txt');if(el)el.textContent=txt;}
+  set('mp-la1',  taLt+'1 · '+taP1);
+  set('mp-la2',  taLt+'2 · '+taP2);
+  set('mp-lb1',  tbLt+'1 · '+tbP1);
+  set('mp-lb2',  tbLt+'2 · '+tbP2);
+  set('mp-lbb-a','Team '+taLt+' · Best Ball');
+  set('mp-lbb-b','Team '+tbLt+' · Best Ball');
+  // Update header name display spans
+  var taN=document.getElementById('mp-ta-names');
+  var tbN=document.getElementById('mp-tb-names');
+  if(taN) taN.textContent=taP1+' / '+taP2;
+  if(tbN) tbN.textContent=tbP1+' / '+tbP2;
+  mpAutoMatchLabel();
+}
+
+// ── Render handicap dots on player rows ───────────────────────────────
+function mpRenderDots(){
+  var c=CARDS[activeCard];
+  var method=(document.getElementById('mp-method')||{}).value||c.mpMethod||'100';
+  // Read ghin/tee LIVE from DOM inputs (not CARDS[]) so dots render before saveState()
+  var plist=[0,1,2,3].map(function(pi){
+    var g=(document.getElementById('p'+pi+'ghin')||{}).value||c.players[pi].ghin||'';
+    var t=(document.getElementById('p'+pi+'tee')||{}).value||c.players[pi].tee||'2';
+    return{ghin:g,tee:t};
+  });
+  var phs=mpCalcPlayHandicaps(plist, method);
+  for(var pi=0;pi<4;pi++){
+    var ph=phs[pi];
+    // Update tee+CH display span (Fix 1 — matches Stroke Play ptee)
+    var teeEl=document.getElementById('mp-ptee-'+pi);
+    if(teeEl){
+      var tp=c.players[pi]; var t=getTee(tp.tee||'2');
+      var tn=t?t.num:'—';
+      teeEl.textContent='T'+tn+' · PH '+(ph||'—');
+    }
+    // Dots
+    for(var h=0;h<18;h++){
+      var el=document.getElementById('mpdot-'+pi+'-'+h);
+      if(el) el.textContent=strokeIndicator(mpDotCount(h,ph));
+    }
+  }
+}
+
+// ── Wire Match Header events ──────────────────────────────────────────
+function wireMPHeader(){
+  // Team letter + method selects in match header
+  ['mp-ta-lt','mp-tb-lt','mp-method'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.addEventListener('change',function(){mpSyncLabels();mpRenderDots();saveState();});
+  });
+  // Re-sync when setup panel player names change (same inputs used by Stroke Play)
+  ['p0name','p1name','p2name','p3name'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.addEventListener('input',function(){
+      if(CARDS[activeCard].mode==='match') mpSyncLabels();
+    });
+  });
+  // Re-render dots when GHIN or tee changes in Match Play mode
+  // (calcHcp also fires mpRenderDots, but this catches any edge cases)
+  for(var _pi=0;_pi<4;_pi++){
+    (function(pi){
+      var gEl=document.getElementById('p'+pi+'ghin');
+      var tEl=document.getElementById('p'+pi+'tee');
+      if(gEl) gEl.addEventListener('input',function(){
+        if(CARDS[activeCard].mode==='match') mpRenderDots();
+      });
+      if(tEl) tEl.addEventListener('change',function(){
+        if(CARDS[activeCard].mode==='match') mpRenderDots();
+      });
+    })(_pi);
+  }
+  // Auto-match label when tee time changes
+  var tt=document.getElementById('teeTime');
+  if(tt) tt.addEventListener('change',function(){mpAutoMatchLabel();saveState();});
+}
+
+function makeBlankCard(){
+  return{
+    en:'LG3 Weekly Game',ed:'',tt:'',pm:'auto',theme:'color',
+    mode:'stroke',
+    mpMethod:'100',
+    mpTaLt:'',mpTbLt:'',
+    players:[
+      {name:'',ghin:'',tee:'2',scores:Array(18).fill(null)},
+      {name:'',ghin:'',tee:'2',scores:Array(18).fill(null)},
+      {name:'',ghin:'',tee:'2',scores:Array(18).fill(null)},
+      {name:'',ghin:'',tee:'2',scores:Array(18).fill(null)}
+    ],
+    gameLabels:['','','',''],
+    gameRows:[Array(18).fill(''),Array(18).fill(''),Array(18).fill(''),Array(18).fill('')]
+  };
+}
+var CARDS=[makeBlankCard(),makeBlankCard(),makeBlankCard(),makeBlankCard()];
+
+// ── Reset active card slot ───────────────────────────────────────────────
+function resetCard(){
+  var cardNum=activeCard+1;
+  if(!confirm('Reset Card '+cardNum+'?\n\nAll player names, handicaps, tee selections, scores, and game rows will be cleared.\nEvent name and date will be kept.'))return;
+  var en=CARDS[activeCard].en||'';
+  var ed=CARDS[activeCard].ed||'';
+  CARDS[activeCard]=makeBlankCard();
+  CARDS[activeCard].en=en;
+  CARDS[activeCard].ed=ed;
+  loadCardFromStore(activeCard);
+  persistAllCards();
+}
+
+// ── Read all DOM → CARDS[activeCard] ────────────────────────────────────
+function saveCurrentCardToStore(){
+  if(_loading)return;
+  var c=CARDS[activeCard];
+  c.en=document.getElementById('evtName').value;
+  c.ed=document.getElementById('evtDate').value;
+  // v88: save per-card tee time for current course
+  if(_activeCourseKey==='tampa'){
+    c.tt=document.getElementById('teeTime').value;
+  }else{
+    var _mttS=document.getElementById('manualTT'+activeCard);
+    c.tt=_mttS?_mttS.value:'';
+  }
+  c.pm=document.getElementById('printer-mode').value;
+  c.theme=document.body.classList.contains('theme-bw')?'bw':'color';
+  for(var pi=0;pi<4;pi++){
+    c.players[pi].name=document.getElementById('p'+pi+'name').value;
+    c.players[pi].ghin=document.getElementById('p'+pi+'ghin').value;
+    c.players[pi].tee=document.getElementById('p'+pi+'tee').value;
+    c.players[pi].scores=st[pi].scores.slice();
+  }
+  for(var gi=0;gi<4;gi++){
+    var el=document.getElementById('glbl'+gi);
+    c.gameLabels[gi]=el?el.value:'';
+    for(var h=0;h<18;h++){
+      var ge=document.getElementById('gi'+gi+'-'+h);
+      c.gameRows[gi][h]=ge?ge.value:'';
+    }
+  }
+  syncEventInfo();    // if on Card 1, push en+ed to Cards 2-4 immediately
+  syncGameRows();     // if checkbox checked on Card 1, push game rows to Cards 2-4
+  // MP fields
+  c.mode=c.mode||'stroke';
+  var mpMap={'mpMethod':'mp-method','mpTaLt':'mp-ta-lt','mpTbLt':'mp-tb-lt'};
+  Object.keys(mpMap).forEach(function(k){var el=document.getElementById(mpMap[k]);if(el)c[k]=el.value;});
+}
+
+// ── Write CARDS[idx] → all DOM ───────────────────────────────────────────
+function loadCardFromStore(idx){
+  _loading=true;
+  var c=CARDS[idx];
+  // 1. Event info, theme, printer mode (non-table DOM)
+  document.getElementById('evtName').value=c.en||'';
+  document.getElementById('evtDate').value=c.ed||'';
+  // v88: restore per-card tee time for current course
+  if(_activeCourseKey==='tampa'){
+    document.getElementById('teeTime').value=c.tt||'';
+  }else{
+    var _mttL=document.getElementById('manualTT'+activeCard);
+    if(_mttL)_mttL.value=c.tt||'';
+  }
+  document.getElementById('printer-mode').value=c.pm||'auto';
+  applyPrinterMode(c.pm||'auto');
+  applyTheme(c.theme||'color');
+  // 2. Player setup panel inputs + st[] — always present (outside the table)
+  for(var pi=0;pi<4;pi++){
+    var p=c.players[pi];
+    document.getElementById('p'+pi+'name').value=p.name||'';
+    document.getElementById('p'+pi+'ghin').value=p.ghin||'';
+    document.getElementById('p'+pi+'tee').value=p.tee||'2';
+    st[pi].scores=(p.scores||Array(18).fill(null)).slice();
+  }
+  // 3. MP header selects BEFORE setMode so buildMatchPlayTable reads correct state
+  var mpMap={'mpMethod':'mp-method','mpTaLt':'mp-ta-lt','mpTbLt':'mp-tb-lt'};
+  Object.keys(mpMap).forEach(function(k){var el=document.getElementById(mpMap[k]);if(el)el.value=c[k]||'';});
+  // 4. ALWAYS rebuild the table — never skip — ensures correct DOM for this card's mode
+  setMode(c.mode||'stroke', false);
+  // 5. Populate score cell inputs + card-name inputs (created by buildTable/buildMatchPlayTable above)
+  for(var pi=0;pi<4;pi++){
+    var p=c.players[pi];
+    var cardName=document.getElementById('card-n'+pi);
+    if(cardName)cardName.value=p.name||'';
+    for(var h=0;h<18;h++){
+      var scEl=document.getElementById('sc'+pi+'-'+h);
+      if(scEl)scEl.value=(p.scores&&p.scores[h]!==null)?p.scores[h]:'';
+    }
+    calcHcp(pi);
+  }
+  // 6. Game rows (inputs only exist in Stroke Play table — skip in Match Play)
+  if((c.mode||'stroke')==='stroke'){
+    for(var gi=0;gi<4;gi++){
+      var el=document.getElementById('glbl'+gi);
+      if(el)el.value=c.gameLabels[gi]||'';
+      for(var h=0;h<18;h++){
+        var ge=document.getElementById('gi'+gi+'-'+h);
+        if(ge)ge.value=c.gameRows[gi][h]||'';
+      }
+      if(gi>0)gameSum(gi);
+    }
+  }
+  refreshHeader();
+  reapplyGameFixedCells(); // v89: restore per-hole locks after card load
+  _loading=false;
+  // BUILD 79 FIX: deferred MP dot render — fires after all DOM writes and
+  // calcHcp calls complete, ensuring GHIN/tee values are available.
+  // setTimeout(0) pushes to next event loop tick without any visible delay.
+  if((CARDS[idx].mode||'stroke')==='match'){
+    setTimeout(function(){ mpSyncLabels(); mpRenderDots(); }, 0);
+  }
+}
+
+// ── Switch active card tab ───────────────────────────────────────────────
+function switchCard(idx){
+  if(idx===activeCard)return;
+  saveCurrentCardToStore();
+  activeCard=idx;
+  document.querySelectorAll('.ctab').forEach(function(t){
+    t.classList.toggle('active',parseInt(t.dataset.ci)===idx);
+  });
+  var badge=document.getElementById('card-slot-badge');
+  if(badge)badge.textContent='Card '+(idx+1);
+  loadCardFromStore(idx);
+  persistAllCards();
+}
+
+// ── Apply theme without toggling ─────────────────────────────────────────
+function applyTheme(theme){
+  var btn=document.getElementById('btn-theme');
+  if(theme==='bw'){
+    document.body.classList.remove('theme-color');
+    document.body.classList.add('theme-bw');
+    if(btn){btn.textContent='⬛ B&W Mode';btn.classList.remove('color-active');btn.classList.add('bw-active');}
+  }else{
+    document.body.classList.remove('theme-bw');
+    document.body.classList.add('theme-color');
+    if(btn){btn.textContent='🎨 Color Mode';btn.classList.remove('bw-active');btn.classList.add('color-active');}
+  }
+}
+
+// ── Save Card button feedback ────────────────────────────────────────────
+function saveCardAndConfirm(){
+  saveCurrentCardToStore();
+  persistAllCards();
+  var btn=document.getElementById('btn-save-card');
+  btn.textContent='✓ Saved!';btn.style.background='#1a5c2e';
+  setTimeout(function(){btn.textContent='💾 Save Card';btn.style.background='';},1500);
+}
+
+// ── Persist all 4 cards to AppSDK ───────────────────────────────────────
+async function persistAllCards(){
+  try{
+    if(!window.AppSDK)return;
+    await AppSDK.upsert('lg3','cards-v63',{cards:CARDS,activeCard:activeCard});
+  }catch(e){}
+}
+
+// ── Sync Event Name + Date from Card 1 → Cards 2-4 ─────────────────────
+function syncEventInfo(){
+  if(activeCard!==0)return;          // only propagates from Card 1
+  var en=document.getElementById('evtName').value;
+  var ed=document.getElementById('evtDate').value;
+  for(var i=1;i<4;i++){
+    CARDS[i].en=en;
+    CARDS[i].ed=ed;
+  }
+}
+
+// ── Sync Game Row Labels + Scores from Card 1 → Cards 2-4 ──────────────
+function syncGameRows(){
+  if(_loading)return;
+  var chk=document.getElementById('sync-game-rows');
+  if(!chk||!chk.checked)return;
+  if(activeCard!==0)return;
+  for(var gi=0;gi<4;gi++){
+    var el=document.getElementById('glbl'+gi);
+    CARDS[0].gameLabels[gi]=el?el.value:'';
+    for(var h=0;h<18;h++){
+      var ge=document.getElementById('gi'+gi+'-'+h);
+      CARDS[0].gameRows[gi][h]=ge?ge.value:'';
+    }
+  }
+  for(var i=1;i<4;i++){
+    CARDS[i].gameLabels=CARDS[0].gameLabels.slice();
+    CARDS[i].gameRows=CARDS[0].gameRows.map(function(r){return r.slice();});
+  }
+}
+
+// ── Load all 4 cards from AppSDK ────────────────────────────────────────
+async function restoreAllCards(){
+  try{
+    if(!window.AppSDK)return;
+    var doc=await AppSDK.get('lg3','cards-v63');
+    if(!doc||!doc.data||!doc.data.cards)return;
+    var saved=doc.data.cards;
+    for(var i=0;i<4;i++){if(saved[i])CARDS[i]=JSON.parse(JSON.stringify(saved[i]));}
+    activeCard=doc.data.activeCard||0;
+    document.querySelectorAll('.ctab').forEach(function(t){
+      t.classList.toggle('active',parseInt(t.dataset.ci)===activeCard);
+    });
+    var badge=document.getElementById('card-slot-badge');
+    if(badge)badge.textContent='Card '+(activeCard+1);
+    loadCardFromStore(activeCard);
+  }catch(e){}
+}
+
+const st=[
+  {ch:0,ph:0,tee:2,scores:Array(18).fill(null)},
+  {ch:0,ph:0,tee:2,scores:Array(18).fill(null)},
+  {ch:0,ph:0,tee:2,scores:Array(18).fill(null)},
+  {ch:0,ph:0,tee:2,scores:Array(18).fill(null)}
+];
+function isP3(h){return PAR3.includes(h);}
+function getTee(n){return TEES.find(t=>t.num===parseInt(n));}
+function calcCH(ghin,tee){
+  const t=getTee(tee);
+  if(!t||ghin===''||isNaN(parseFloat(ghin)))return 0;
+  return Math.max(0,Math.round(parseFloat(ghin)*t.slope/113+(t.rating-72)));
+}
+function dotCount(h,ph){
+  const s=SI[h];
+  if(ph>=18&&s<=(ph-18))return 2;
+  if(s<=ph)return 1;
+  return 0;
+}
+function strokeIndicator(n){return n===2?'●●':n===1?'●':'';}
+function fmtDate(s){
+  if(!s)return'';
+  const[y,m,d]=s.split('-');
+  return['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]+' '+(+d)+', '+y;
+}
+function mkTd(cls,txt){
+  const c=document.createElement('td');
+  if(cls)c.className=cls;
+  if(txt!=null)c.textContent=txt;
+  return c;
+}
+function buildTable(){
+  var tbl=document.getElementById('scbody-l');
+  var tbr=document.getElementById('scbody-r');
+  tbl.innerHTML='';tbr.innerHTML='';
+  // Restore right colgroup to Stroke Play 13-col layout (MP mutates it)
+  var cgr=document.getElementById('colgr-r');
+  if(cgr) cgr.innerHTML='<col/><col/><col/><col/><col/><col/><col/><col/><col/>'+
+    '<col class="csub-r"/><col class="csub-r"/>'+
+    '<col class="cp3-r"/><col class="cp3-r"/>';
+
+  // ── HOLE HEADER ─────────────────────────────────────────────────────────
+  var rl=document.createElement('tr');rl.className='rhdr';
+  rl.appendChild(mkTd('llbl','HOLE'));
+  for(var h=0;h<9;h++)rl.appendChild(mkTd(isP3(h)?'hp':'hn',h+1));
+  rl.appendChild(mkTd('sg','OUT'));
+  tbl.appendChild(rl);
+
+  var rr=document.createElement('tr');rr.className='rhdr';
+  for(var h=9;h<18;h++)rr.appendChild(mkTd(isP3(h)?'hp':'hn',h+1));
+  rr.appendChild(mkTd('sg','IN'));rr.appendChild(mkTd('sg','TOT'));
+  rr.appendChild(mkTd('sp','P3 G'));rr.appendChild(mkTd('sp','P3 N'));
+  tbr.appendChild(rr);
+
+  // ── PAR ROW ─────────────────────────────────────────────────────────────
+  var pl=document.createElement('tr');pl.className='rpar';
+  pl.appendChild(mkTd('lpar','PAR'));
+  var fp=0,bp=0;
+  for(var h=0;h<9;h++){fp+=PAR[h];pl.appendChild(mkTd(isP3(h)?'hp':'hn',PAR[h]));}
+  pl.appendChild(mkTd('sg',fp));
+  tbl.appendChild(pl);
+
+  var pr=document.createElement('tr');pr.className='rpar';
+  for(var h=9;h<18;h++){bp+=PAR[h];pr.appendChild(mkTd(isP3(h)?'hp':'hn',PAR[h]));}
+  pr.appendChild(mkTd('sg',bp));pr.appendChild(mkTd('sg',fp+bp));
+  pr.appendChild(mkTd('sp',''));pr.appendChild(mkTd('sp',''));
+  tbr.appendChild(pr);
+
+  // ── HDCP ROW ────────────────────────────────────────────────────────────
+  var sl=document.createElement('tr');sl.className='rsi';
+  sl.appendChild(mkTd('lsi','HDCP'));
+  for(var h=0;h<9;h++)sl.appendChild(mkTd(isP3(h)?'hp':'hn',SI[h]));
+  sl.appendChild(mkTd('sg',''));
+  tbl.appendChild(sl);
+
+  var sr=document.createElement('tr');sr.className='rsi';
+  for(var h=9;h<18;h++)sr.appendChild(mkTd(isP3(h)?'hp':'hn',SI[h]));
+  sr.appendChild(mkTd('sg',''));sr.appendChild(mkTd('sg',''));
+  sr.appendChild(mkTd('sp',''));sr.appendChild(mkTd('sp',''));
+  tbr.appendChild(sr);
+
+  // ── SEPARATOR ───────────────────────────────────────────────────────────
+  var sepl=document.createElement('tr');sepl.className='rsep';
+  var s1=document.createElement('td');s1.colSpan=11;sepl.appendChild(s1);tbl.appendChild(sepl);
+  var sepr=document.createElement('tr');sepr.className='rsep';
+  var s2=document.createElement('td');s2.colSpan=13;sepr.appendChild(s2);tbr.appendChild(sepr);
+
+  // ── PLAYER ROWS ─────────────────────────────────────────────────────────
+  for(var pi=0;pi<4;pi++){
+    var rpl=document.createElement('tr');rpl.className='rpl';
+    var lc=document.createElement('td');lc.className='plbl';
+    var nameInp=document.createElement('input');
+    nameInp.className='pname';nameInp.id='card-n'+pi;nameInp.type='text';
+    nameInp.placeholder='Player '+(pi+1);nameInp.dataset.pi=pi;
+    lc.appendChild(nameInp);
+    var teeSpan=document.createElement('span');
+    teeSpan.className='ptee';teeSpan.id='ptee'+pi;teeSpan.textContent='T2 · PH —';
+    lc.appendChild(teeSpan);rpl.appendChild(lc);
+    for(var h=0;h<9;h++){
+      var sc=document.createElement('td');sc.className='sc'+(isP3(h)?' p3c':'');
+      var dd=document.createElement('div');dd.className='sdot';dd.id='dot'+pi+'-'+h;sc.appendChild(dd);
+      var inp=document.createElement('input');inp.type='number';inp.className='sinp';
+      inp.id='sc'+pi+'-'+h;inp.min=1;inp.max=15;inp.dataset.pi=pi;inp.dataset.h=h;
+      sc.appendChild(inp);rpl.appendChild(sc);
+    }
+    var ot=document.createElement('td');ot.className='sg';ot.id='out'+pi;rpl.appendChild(ot);
+    tbl.appendChild(rpl);
+    // v90: Stableford Points row (left) — hidden by default, shown by .stbl-pts
+    var _sfL=document.createElement('tr');_sfL.className='rsf';
+    var _sfLlbl=document.createElement('td');_sfLlbl.className='lsf';_sfLlbl.textContent='Points';_sfL.appendChild(_sfLlbl);
+    for(var _sh=0;_sh<9;_sh++){var _sfLc=document.createElement('td');if(isP3(_sh))_sfLc.classList.add('sfp3');_sfL.appendChild(_sfLc);}
+    _sfL.appendChild(mkTd('sg',''));tbl.appendChild(_sfL);
+
+    var rpr=document.createElement('tr');rpr.className='rpl';
+    for(var h=9;h<18;h++){
+      var sc=document.createElement('td');sc.className='sc'+(isP3(h)?' p3c':'');
+      var dd=document.createElement('div');dd.className='sdot';dd.id='dot'+pi+'-'+h;sc.appendChild(dd);
+      var inp=document.createElement('input');inp.type='number';inp.className='sinp';
+      inp.id='sc'+pi+'-'+h;inp.min=1;inp.max=15;inp.dataset.pi=pi;inp.dataset.h=h;
+      sc.appendChild(inp);rpr.appendChild(sc);
+    }
+    var itd=document.createElement('td');itd.className='sg';itd.id='in'+pi;rpr.appendChild(itd);
+    var ttd=document.createElement('td');ttd.className='sg';ttd.id='tot'+pi;rpr.appendChild(ttd);
+    var g1=document.createElement('td');g1.className='sp';g1.id='p3g'+pi;rpr.appendChild(g1);
+    var g2=document.createElement('td');g2.className='sp';g2.id='p3n'+pi;rpr.appendChild(g2);
+    // v90: Stableford Points row (right) — hidden by default
+    var _sfR=document.createElement('tr');_sfR.className='rsf';
+    for(var _sh=9;_sh<18;_sh++){var _sfRc=document.createElement('td');if(isP3(_sh))_sfRc.classList.add('sfp3');_sfR.appendChild(_sfRc);}
+    _sfR.appendChild(mkTd('sg',''));_sfR.appendChild(mkTd('sg',''));
+    _sfR.appendChild(mkTd('sp',''));_sfR.appendChild(mkTd('sp',''));
+    tbr.appendChild(_sfR);
+    tbr.appendChild(rpr);
+  }
+
+  // ── GAME SELECTOR ROW (v91) ─────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ── GAME ROWS ────────────────────────────────────────────────────────────
+  for(var gi=0;gi<4;gi++){
+    var rgl=document.createElement('tr');rgl.className='rgm'+(gi===3?' rgm-4':'');
+    var lc=document.createElement('td');
+    var wrap=document.createElement('div');wrap.className='glbl-wrap';
+    var li=document.createElement('input');
+    li.type='text';li.className='glbl-inp';li.id='glbl'+gi;
+    li.placeholder='Row '+(gi+1)+' heading';li.dataset.gi=gi;li.addEventListener('input',syncGameRows);
+    wrap.appendChild(li);lc.appendChild(wrap);rgl.appendChild(lc);
+    for(var h=0;h<9;h++){
+      var gc=document.createElement('td');
+      if(isP3(h))gc.classList.add('p3c');
+      var gi2=document.createElement('input');gi2.type='number';gi2.className='ginp';
+      gi2.id='gi'+gi+'-'+h;gi2.dataset.gi=gi;gi2.addEventListener('input',syncGameRows);
+      gc.appendChild(gi2);rgl.appendChild(gc);
+    }
+    var go=document.createElement('td');go.className='sg';go.id='gout'+gi;rgl.appendChild(go);
+    tbl.appendChild(rgl);
+
+    var rgr=document.createElement('tr');rgr.className='rgm'+(gi===3?' rgm-4':'');
+    for(var h=9;h<18;h++){
+      var gc=document.createElement('td');
+      if(isP3(h))gc.classList.add('p3c');
+      var gi2=document.createElement('input');gi2.type='number';gi2.className='ginp';
+      gi2.id='gi'+gi+'-'+h;gi2.dataset.gi=gi;gi2.addEventListener('input',syncGameRows);
+      gc.appendChild(gi2);rgr.appendChild(gc);
+    }
+    var gin=document.createElement('td');gin.className='sg';gin.id='gin'+gi;rgr.appendChild(gin);
+    var gt=document.createElement('td');gt.className='sg';gt.id='gtot'+gi;rgr.appendChild(gt);
+    rgr.appendChild(mkTd('sp',''));rgr.appendChild(mkTd('sp',''));
+    tbr.appendChild(rgr);
+  }
+  wireTableEvents();
+}
+function wireTableEvents(){
+  document.querySelectorAll('.sinp').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var pi=parseInt(this.dataset.pi);
+      var h=parseInt(this.dataset.h);
+      st[pi].scores[h]=this.value===''?null:parseInt(this.value);
+      updateTotals(pi);saveState();
+    });
+  });
+  document.querySelectorAll('.pname').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var pi=parseInt(this.dataset.pi);
+      var setupEl=document.getElementById('p'+pi+'name');
+      if(setupEl)setupEl.value=this.value;
+      saveState();
+    });
+  });
+  document.querySelectorAll('.ginp').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var gi=parseInt(this.dataset.gi);
+      gameSum(gi);syncGameRows();saveState();
+    });
+  });
+  document.querySelectorAll('.glbl-inp').forEach(function(inp){
+    inp.addEventListener('input',function(){syncGameRows();saveState();});
+  });
+}
+function calcHcp(pi){
+  const g=document.getElementById('p'+pi+'ghin').value;
+  const tn=parseInt(document.getElementById('p'+pi+'tee').value);
+  st[pi].tee=tn;
+  const ch=calcCH(g,tn);
+  st[pi].ch=ch;st[pi].ph=ch;
+  const t=getTee(tn);
+  document.getElementById('p'+pi+'ch').textContent='CH: '+ch+' | PH: '+ch+'  ('+t.name+' '+t.rating+'/'+t.slope+')';
+  const me=document.getElementById('ptee'+pi);
+  if(me)me.textContent='T'+tn+' · PH '+(ch||'—');
+  refreshDots(pi);updateTotals(pi);
+  // Match Play: re-render dots on same GHIN/tee change
+  if(CARDS[activeCard].mode==='match') mpRenderDots();
+  saveState();
+}
+function refreshDots(pi){
+  for(let h=0;h<18;h++){
+    const el=document.getElementById('dot'+pi+'-'+h);
+    if(el)el.textContent=strokeIndicator(dotCount(h,st[pi].ph));
+  }
+}
+function syncName(pi){
+  const v=document.getElementById('p'+pi+'name').value;
+  const c=document.getElementById('card-n'+pi);if(c)c.value=v;
+  saveState();
+}
+function updateTotals(pi){
+  let f=0,b=0,fc=0,bc=0;
+  st[pi].scores.forEach((s,h)=>{if(s!==null){h<9?(f+=s,fc++):(b+=s,bc++);}});
+  const oe=document.getElementById('out'+pi);
+  const ie=document.getElementById('in'+pi);
+  const te=document.getElementById('tot'+pi);
+  if(oe)oe.textContent=fc>0?f:'';
+  if(ie)ie.textContent=bc>0?b:'';
+  if(te)te.textContent=(fc||bc)?(f+b):'';
+  let p3g=0,p3c=0,p3s=0;
+  PAR3.forEach(idx=>{
+    if(st[pi].scores[idx]!==null){p3g+=st[pi].scores[idx];p3c++;p3s+=dotCount(idx,st[pi].ph);}
+  });
+  const ge=document.getElementById('p3g'+pi);if(ge)ge.textContent=p3c?p3g:'';
+  const ne=document.getElementById('p3n'+pi);if(ne)ne.textContent=p3c?(p3g-p3s):'';
+}
+function gameSum(gi){
+  if(gi===0){
+    var o0=document.getElementById('gout0'),i0=document.getElementById('gin0'),t0=document.getElementById('gtot0');
+    if(o0)o0.textContent=''; if(i0)i0.textContent=''; if(t0)t0.textContent='';
+    return;
+  }
+  // Null-safe: game row inputs only exist in Stroke Play table
+  let f=0,b=0,fc=0,bc=0;
+  for(let h=0;h<9;h++){var el=document.getElementById('gi'+gi+'-'+h);if(!el)return;var v=el.value;if(v!==''){f+=parseFloat(v);fc++;}}
+  for(let h=9;h<18;h++){var el=document.getElementById('gi'+gi+'-'+h);if(!el)return;var v=el.value;if(v!==''){b+=parseFloat(v);bc++;}}
+  var eo=document.getElementById('gout'+gi),ei=document.getElementById('gin'+gi),et=document.getElementById('gtot'+gi);
+  if(eo)eo.textContent=fc?f:''; if(ei)ei.textContent=bc?b:''; if(et)et.textContent=(fc||bc)?(f+b):'';
+  syncGameRows();
+  saveState();
+}
+var MP_TEE_MAP={'8:08 AM':'Match 1  —  8:08 AM','8:16 AM':'Match 2  —  8:16 AM',
+               '8:24 AM':'Match 3  —  8:24 AM','8:32 AM':'Match 4  —  8:32 AM'};
+function mpAutoMatchLabel(){
+  var tt=(document.getElementById('teeTime')||{}).value||'';
+  var el=document.getElementById('mp-match-label');
+  if(el) el.textContent=MP_TEE_MAP[tt]||'Match —';
+}
+
+function refreshHeader(){
+  const en=document.getElementById('evtName').value||'LG3 Weekly Game';
+  const ed=fmtDate(document.getElementById('evtDate').value);
+  // v88: read tee time from correct source per course
+  var tt=(_activeCourseKey==='tampa')
+    ? document.getElementById('teeTime').value
+    : (function(){var _el=document.getElementById('manualTT'+activeCard);return _el?_el.value:'';})();
+  const mid=document.getElementById('hdr-mid');
+  const right=document.getElementById('hdr-right');
+  if(mid)mid.textContent=en;
+  if(right){let parts=[];if(ed)parts.push(ed);if(tt)parts.push('Tee: '+tt);right.textContent=parts.join('  ·  ');}
+  if(CARDS[activeCard].mode==='match') mpAutoMatchLabel();
+  saveState();
+}
+function toggleSetup(){
+  const b=document.getElementById('sbody');
+  const t=document.getElementById('stog');
+  const h=b.style.display==='none';
+  b.style.display=h?'':'none';t.textContent=h?'▲':'▼';
+}
+function toggleBack(){
+  const bk=document.getElementById('back');
+  bk.style.display=(bk.style.display==='block')?'none':'block';
+}
+const STBL={
+  std:{cols:['Score','Points'],rows:[['Eagle or better','4'],['Birdie','3'],['Par','2'],['Bogey','1'],['Double Bogey','0']]},
+  mod:{cols:['Score','Points'],rows:[['Albatross','8'],['Eagle','5'],['Birdie','3'],['Par','2'],['Bogey','-1'],['Double Bogey','-3']]},
+  lg3:{cols:['Score','Points'],rows:[['Albatross / Hole in One','+10'],['Eagle','+6'],['Birdie','+4'],['Par','+2'],['Bogey','0'],['Double Bogey / Net Double Bogey','-1']]},
+  lg3b:{cols:['Score','Points'],rows:[['Double Bogey or Worse','0'],['Bogey','+1'],['Par','+2'],['Birdie','+3'],['Eagle','+4'],['Albatross / Hole in One','+5']]}
+};
+function showStbl(){
+  const key=document.getElementById('stbl-sel').value;
+  const tbl=document.getElementById('stbl-tbl');
+  if(!key){tbl.style.display='none';return;}
+  tbl.style.display='';
+  const d=STBL[key];
+  const h=document.getElementById('stbl-head');
+  const b=document.getElementById('stbl-body');
+  h.innerHTML='<tr>'+d.cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>';
+  b.innerHTML=d.rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('');
+}
+
+function applyPrinterMode(mode){
+  var btnBoth=document.getElementById('btn-print-both');
+  var btnFront=document.getElementById('btn-print-front');
+  var btnBack=document.getElementById('btn-print-back');
+  if(mode==='manual'){
+    btnBoth.style.display='none';
+    btnFront.style.display='';
+    btnBack.style.display='';
+  }else{
+    btnBoth.style.display='';
+    btnFront.style.display='none';
+    btnBack.style.display='none';
+  }
+}
+
+// saveState: auto-sync current card store then persist all
+// Guard: skips if loadCardFromStore is running (prevents half-DOM reads)
+var _loading=false;
+async function saveState(){
+  if(_loading)return;
+  saveCurrentCardToStore();
+  await persistAllCards();
+}
+// loadState: restore all 4 cards (delegates to restoreAllCards)
+async function loadState(){
+  await restoreAllCards();
+}
+document.getElementById('setup-hdr-toggle').addEventListener('click',toggleSetup);
+document.getElementById('btn-reset-card').addEventListener('click',resetCard);
+document.getElementById('btn-back').addEventListener('click',toggleBack);
+document.getElementById('btn-stroke').addEventListener('click',function(){setMode('stroke');});
+document.getElementById('btn-match').addEventListener('click',function(){setMode('match');});
+wireMPHeader();
+document.getElementById('printer-mode').addEventListener('change',function(){
+  applyPrinterMode(this.value);
+  saveState();
+});
+
+// ── PDF 2-UP PRINT ENGINE (v57) ─────────────────────────────────────────
+async function generate2UpPDF(includeFront, includeBack){
+  if(typeof html2canvas==='undefined'||typeof window.jspdf==='undefined'){
+    alert('PDF libraries not loaded. Reload the page and try again.'); return;
+  }
+  var PW=11, PH=8.5, CH=4.25, SC=3;
+  var jsPDF=window.jspdf.jsPDF;
+  var pdf=new jsPDF({orientation:'landscape',unit:'in',format:[PW,PH]});
+  var card=document.getElementById('card');
+  var bk=document.getElementById('back');
+  var setup=document.getElementById('setup');
+  var setupWasHidden=(setup.style.display==='none');
+  setup.style.display='none';
+  await new Promise(function(r){setTimeout(r,80);});
+  async function capture(el,slotW,slotH){
+    var canvas=await html2canvas(el,{
+      scale:SC,useCORS:true,backgroundColor:'#ffffff',
+      width:el.scrollWidth,height:el.scrollHeight,
+      windowWidth:el.scrollWidth,logging:false
+    });
+    var marg=0.3;
+    var maxW=slotW-(marg*2); var maxH=slotH;
+    var ratio=canvas.width/canvas.height;
+    var dw=maxW, dh=dw/ratio;
+    if(dh>maxH){dh=maxH;dw=dh*ratio;}
+    var dx=(slotW-dw)/2;
+    return{url:canvas.toDataURL('image/jpeg',0.97),dw:dw,dh:dh,dx:dx};
+  }
+  try{
+    if(includeFront){
+      var f=await capture(card,PW,CH);
+      pdf.addImage(f.url,'JPEG',f.dx,(CH-f.dh)/2,f.dw,f.dh);
+      pdf.addImage(f.url,'JPEG',f.dx,CH+(CH-f.dh)/2,f.dw,f.dh);
+    }
+    if(includeBack){
+      var bkWasHidden=(bk.style.display==='none'||bk.style.display==='');
+      if(bkWasHidden)bk.style.display='flex';
+      await new Promise(function(r){setTimeout(r,200);});
+      var b=await capture(bk,PW,CH);
+      if(bkWasHidden)bk.style.display='none';
+      if(includeFront)pdf.addPage([PW,PH],'landscape');
+      pdf.addImage(b.url,'JPEG',b.dx,(CH-b.dh)/2,b.dw,b.dh);
+      pdf.addImage(b.url,'JPEG',b.dx,CH+(CH-b.dh)/2,b.dw,b.dh);
+    }
+  }finally{
+    if(!setupWasHidden)setup.style.display='';
+  }
+  var blob=pdf.output('blob');
+  var url=URL.createObjectURL(blob);
+  var w=window.open(url,'_blank');
+  if(!w){
+    var nm=(document.getElementById('evtName').value||'LG3').replace(/[^a-z0-9]/gi,'_');
+    pdf.save('LG3_'+nm+'_2up.pdf');
+    alert('Pop-up blocked — PDF downloaded. Open it and print with Ctrl+P.');
+  }
+}
+function setBtnLoading(btn,on){
+  btn.disabled=on;btn.style.opacity=on?'0.6':'1';
+  if(on){btn._orig=btn.textContent;btn.textContent='Building PDF...';}
+  else{btn.textContent=btn._orig||btn.textContent;}
+}
+document.getElementById('btn-print-front').addEventListener('click',async function(){
+  setBtnLoading(this,true);
+  try{await generate2UpPDF(true,false);}catch(e){alert('Error: '+e.message);}
+  setBtnLoading(this,false);
+});
+document.getElementById('btn-print-back').addEventListener('click',async function(){
+  setBtnLoading(this,true);
+  try{await generate2UpPDF(false,true);}catch(e){alert('Error: '+e.message);}
+  setBtnLoading(this,false);
+});
+document.getElementById('btn-print-both').addEventListener('click',async function(){
+  setBtnLoading(this,true);
+  try{await generate2UpPDF(true,true);}catch(e){alert('Error: '+e.message);}
+  setBtnLoading(this,false);
+});
+
+
+document.getElementById('evtName').addEventListener('input',refreshHeader);
+document.getElementById('evtDate').addEventListener('input',refreshHeader);
+document.getElementById('sync-game-rows').addEventListener('change',function(){
+  if(this.checked){syncGameRows();persistAllCards();}
+});
+document.getElementById('teeTime').addEventListener('change',refreshHeader);
+for(var i=0;i<4;i++){
+  (function(pi){
+    document.getElementById('p'+pi+'name').addEventListener('input',function(){syncName(pi);});
+    document.getElementById('p'+pi+'ghin').addEventListener('input',function(){calcHcp(pi);});
+    document.getElementById('p'+pi+'tee').addEventListener('change',function(){calcHcp(pi);});
+  })(i);
+}
+document.getElementById('stbl-sel').addEventListener('change',showStbl);
+document.addEventListener('DOMContentLoaded',async function(){
+  const now=new Date();
+  document.getElementById('evtDate').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  var _initMode=CARDS[activeCard].mode||'stroke';// ── Course Profile Functions ──────────────────────────────────
+function buildCTPPanel(){
+  var box=document.getElementById('back-ctp-boxes');
+  if(!box)return;
+  box.innerHTML='';
+  PAR3.forEach(function(h){
+    var holeNum=h+1;
+    var lbl=document.createElement('label');
+    lbl.style.cssText='font-size:9pt;display:flex;align-items:center;gap:5px;';
+    var chk=document.createElement('input');
+    chk.type='checkbox';
+    chk.id='ctp'+holeNum;
+    lbl.appendChild(chk);
+    lbl.appendChild(document.createTextNode(' Hole '+holeNum+' (Par 3)'));
+    box.appendChild(lbl);
+  });
+}
+function buildTeeSelects(){
+  ['p0tee','p1tee','p2tee','p3tee'].forEach(function(id){
+    var sel=document.getElementById(id);
+    if(!sel)return;
+    var cur=sel.value;
+    sel.innerHTML='';
+    TEES.forEach(function(t){
+      var opt=document.createElement('option');
+      opt.value=t.num;
+      opt.textContent=t.num+' – '+t.name;
+      sel.appendChild(opt);
+    });
+    // Restore selection if valid, else default to first
+    var found=Array.from(sel.options).some(function(o){return o.value===cur;});
+    if(found){sel.value=cur;}else{sel.value=TEES[0].num;}
+  });
+}
+function updateCourseNameSpans(){
+  var n=_cp.courseName;
+  ['hdr-course-name','card-course-name','back-course-name'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.textContent=n;
+  });
+}
+function applyCourseProfile(key,rebuild){
+  _activeCourseKey=key;
+  _cp=COURSE_PROFILES[key];
+  PAR=_cp.holePar.slice();
+  SI=_cp.holeHandicap.slice();
+  PAR3=_cp.par3Holes.slice();
+  TEES=_cp.tees.map(function(t){return {num:t.num,name:t.name,rating:t.rating,slope:t.slope};});
+  localStorage.setItem('lg3_course',key);
+  updateCourseNameSpans();
+  buildTeeSelects();
+  buildCTPPanel();
+  // v88: toggle tee time UI
+  var _isTp=(key==='tampa');
+  var _tpW=document.getElementById('tp-tt-wrap');
+  var _mW=document.getElementById('manual-tt-wrap');
+  if(_tpW)_tpW.style.display=_isTp?'':'none';
+  if(_mW)_mW.style.display=_isTp?'none':'flex';
+  if(rebuild){
+    var mode=CARDS[activeCard].mode||'stroke';
+    if(mode==='match'){buildMatchPlayTable();}else{buildTable();wireTableEvents();}
+  }
+}
+// Set course selector to persisted value
+(function(){
+  var cs=document.getElementById('course-select');
+  if(cs){
+    cs.value=_activeCourseKey;
+    cs.addEventListener('change',function(){
+      applyCourseProfile(this.value,true);
+    });
+  }
+  // v89: game selector wiring
+  var gs89=document.getElementById('game-select');
+  if(gs89){
+    gs89.value=_activeGameId;
+    gs89.addEventListener('change',function(){
+      applyGameProfile(this.value,false);
+    });
+  }
+})();
+updateCourseNameSpans();
+buildCTPPanel();
+// v88: init tee time UI toggle
+(function(){
+  var _isTp=(_activeCourseKey==='tampa');
+  var _tpW=document.getElementById('tp-tt-wrap');
+  var _mW=document.getElementById('manual-tt-wrap');
+  if(_tpW)_tpW.style.display=_isTp?'':'none';
+  if(_mW)_mW.style.display=_isTp?'none':'flex';
+})();
+// ──────────────────────────────────────────────────────────────
+if(_initMode==='match'){setMode('match',true);buildMatchPlayTable();}else{buildTable();showStbl();}applyGameProfile(_activeGameId,true);applyPrinterMode(document.getElementById('printer-mode').value);
+  await restoreAllCards();
+});
+document.getElementById('btn-theme').addEventListener('click',function(){
+  var isBW=document.body.classList.contains('theme-bw');
+  applyTheme(isBW?'color':'bw');
+  saveState();
+});
+
+// ── PAIRED SHEET PDF ENGINE (v70) ────────────────────────────────────────
+// Tab-independent: always Sheet1=Cards1+2, Sheet2=Cards3+4.
+// Per-card theme applied during capture. Incomplete-card warnings.
+
+async function captureEl(el, PW, CH, SC){
+  var marg=0.3;
+  var canvas=await html2canvas(el,{
+    scale:SC,useCORS:true,backgroundColor:'#ffffff',
+    width:el.scrollWidth,height:el.scrollHeight,
+    windowWidth:el.scrollWidth,logging:false
+  });
+  var maxW=PW-(marg*2);
+  var ratio=canvas.width/canvas.height;
+  var dw=maxW, dh=dw/ratio;
+  if(dh>CH){dh=CH;dw=dh*ratio;}
+  var dx=(PW-dw)/2;
+  return{url:canvas.toDataURL('image/jpeg',0.97),dw:dw,dh:dh,dx:dx};
+}
+
+function cardIsComplete(idx){
+  var c=CARDS[idx];
+  for(var pi=0;pi<4;pi++){if(c.players[pi]&&c.players[pi].name&&c.players[pi].name.trim()!=='')return true;}
+  return false;
+}
+
+async function buildPairedPDF(ci_a, ci_b, sheetLabel, statusCb){
+  var PW=11,PH=8.5,CH=4.25,SC=3;
+  var jsPDF=window.jspdf.jsPDF;
+  var pdf=new jsPDF({orientation:'landscape',unit:'in',format:[PW,PH]});
+  var setup=document.getElementById('setup');
+  var bk=document.getElementById('back');
+  var originalCard=activeCard;
+
+  saveCurrentCardToStore();
+  setup.style.display='none';
+
+  if(statusCb)statusCb('Capturing Card '+(ci_a+1)+'…');
+  activeCard=ci_a;
+  applyTheme(CARDS[ci_a].theme||'color');
+  loadCardFromStore(ci_a);
+  await new Promise(function(r){setTimeout(r,400);});  // allow deferred mpRenderDots to fire
+  var fa=await captureEl(document.getElementById('card'),PW,CH,SC);
+
+  if(statusCb)statusCb('Capturing Card '+(ci_b+1)+'…');
+  activeCard=ci_b;
+  applyTheme(CARDS[ci_b].theme||'color');
+  loadCardFromStore(ci_b);
+  await new Promise(function(r){setTimeout(r,400);});  // allow deferred mpRenderDots to fire
+  var fb=await captureEl(document.getElementById('card'),PW,CH,SC);
+
+  activeCard=originalCard;
+  applyTheme(CARDS[originalCard].theme||'color');
+  loadCardFromStore(originalCard);
+  setup.style.display='';
+
+  pdf.addImage(fa.url,'JPEG',fa.dx,(CH-fa.dh)/2,fa.dw,fa.dh);
+  pdf.addImage(fb.url,'JPEG',fb.dx,CH+(CH-fb.dh)/2,fb.dw,fb.dh);
+
+  if(statusCb)statusCb('Capturing shared back…');
+  setup.style.display='none';
+  var bkWasHidden=(bk.style.display==='none'||bk.style.display==='');
+  if(bkWasHidden)bk.style.display='flex';
+  await new Promise(function(r){setTimeout(r,250);});
+  var bkImg=await captureEl(bk,PW,CH,SC);
+  if(bkWasHidden)bk.style.display='none';
+  setup.style.display='';
+
+  pdf.addPage([PW,PH],'landscape');
+  pdf.addImage(bkImg.url,'JPEG',bkImg.dx,(CH-bkImg.dh)/2,bkImg.dw,bkImg.dh);
+  pdf.addImage(bkImg.url,'JPEG',bkImg.dx,CH+(CH-bkImg.dh)/2,bkImg.dw,bkImg.dh);
+
+  return pdf;
+}
+
+function openPDF(pdf, filename){
+  var blob=pdf.output('blob');
+  var url=URL.createObjectURL(blob);
+  var w=window.open(url,'_blank');
+  if(!w)pdf.save(filename);
+  setTimeout(function(){URL.revokeObjectURL(url);},60000);
+}
+
+async function validateAllCards(){
+  var incomplete=[];
+  for(var i=0;i<4;i++){if(!cardIsComplete(i))incomplete.push(i+1);}
+  if(incomplete.length===0)return true;
+  return window.confirm('Card(s) '+incomplete.join(', ')+' have no players entered.\n\nContinue printing anyway?');
+}
+
+document.getElementById('btn-print-all').addEventListener('click',async function(){
+  if(typeof html2canvas==='undefined'||typeof window.jspdf==='undefined'){
+    alert('PDF libraries not loaded — please reload and try again.'); return;
+  }
+  if(!(await validateAllCards()))return;
+  var btn=this;
+  btn.disabled=true;btn._orig=btn.textContent;btn.style.opacity='0.65';
+  function setStatus(msg){btn.textContent=msg;}
+  try{
+    setStatus('Sheet 1: Capturing Card 1…');
+    var pdf1=await buildPairedPDF(0,1,'Sheet1',setStatus);
+    setStatus('Sheet 1: Opening PDF…');
+    openPDF(pdf1,'LG3_Sheet1_Cards1-2.pdf');
+    setStatus('Sheet 2: Starting…');
+    await new Promise(function(r){setTimeout(r,800);});
+    setStatus('Sheet 2: Capturing Card 3…');
+    var pdf2=await buildPairedPDF(2,3,'Sheet2',setStatus);
+    setStatus('Sheet 2: Opening PDF…');
+    openPDF(pdf2,'LG3_Sheet2_Cards3-4.pdf');
+    setStatus('✓ Both sheets ready!');
+    setTimeout(function(){btn.textContent=btn._orig;btn.style.opacity='1';btn.disabled=false;},2500);
+  }catch(e){
+    alert('Print All Cards failed:\n\n'+e.message);
+    btn.textContent=btn._orig;btn.style.opacity='1';btn.disabled=false;
+  }
+});
+
+
+// ── GAME PROFILE FUNCTIONS — GLOBAL SCOPE (v89.3 fix) ───────────────────────
+function applyGameProfile(gameId,skipSave){
+  _activeGameId=gameId;
+  var profile=GAME_PROFILES.find(function(g){return g.id===gameId;})||GAME_PROFILES[0];
+  var gs=document.getElementById('game-select');
+  if(gs) gs.value=gameId;
+  // v90: toggle Stableford Points layout
+  document.body.classList.toggle('stbl-pts', !!(profile.specialLayout==='stableford-pts'));
+  for(var gi=0;gi<4;gi++){
+    var row=profile.rows[gi];
+    var lbl=document.getElementById('glbl'+gi);
+    if(lbl){
+      lbl.value=row.label;
+      lbl.dispatchEvent(new Event('input',{bubbles:true}));
+    }
+    for(var h=0;h<18;h++){
+      var inp=document.getElementById('gi'+gi+'-'+h);
+      if(!inp) continue;
+      if(row.type==='perHoleValues'){
+        inp.value=row.values[h];
+        inp.readOnly=true;
+        inp.classList.add('ginp-fixed');
+      } else {
+        inp.readOnly=false;
+        inp.classList.remove('ginp-fixed');
+        if(!skipSave) inp.value='';
+      }
+    }
+  }
+  if(!skipSave) saveState();
+}
+function reapplyGameFixedCells(){
+  var profile=GAME_PROFILES.find(function(g){return g.id===_activeGameId;})||GAME_PROFILES[0];
+  for(var gi=0;gi<4;gi++){
+    var row=profile.rows[gi];
+    for(var h=0;h<18;h++){
+      var inp=document.getElementById('gi'+gi+'-'+h);
+      if(!inp) continue;
+      if(row.type==='perHoleValues'){
+        inp.readOnly=true; inp.classList.add('ginp-fixed');
+      } else {
+        inp.readOnly=false; inp.classList.remove('ginp-fixed');
+      }
+    }
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+</script>
+
+</body>
+</html>
