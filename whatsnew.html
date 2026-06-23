@@ -1,0 +1,140 @@
+<h1>What’s New – Build 93</h1>
+<p>Released: June 23, 2026 · Built from v92 baseline</p>
+
+<style>
+    /* SCOPE ALL STYLES TO THE SIDEBAR ONLY */
+    #sidebar-content {
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5;
+        color: #222;
+        padding-right: 10px;
+    }
+
+    #sidebar-content h1 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+
+    #sidebar-content h2 {
+        margin-top: 22px;
+        font-size: 18px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 4px;
+    }
+
+    #sidebar-content h3 {
+        margin-top: 18px;
+        font-size: 16px;
+    }
+
+    #sidebar-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 13px;
+    }
+
+    #sidebar-content table th,
+    #sidebar-content table td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: left;
+    }
+
+    #sidebar-content ul {
+        padding-left: 20px;
+        font-size: 14px;
+    }
+
+    #sidebar-content .small {
+        font-size: 12px;
+        color: #555;
+    }
+
+    #sidebar-content .check {
+        font-size: 16px;
+    }
+</style>
+
+<h2>New Feature 1 — Individual 11s Game Profile</h2>
+
+<p>A new game type <strong>Individual 11s</strong> has been added to the Game dropdown. When selected, Rows 5–8 automatically populate with each player's name followed by <strong>11 +/-</strong>:</p>
+
+<table>
+<tr><th>Row</th><th>Label Example</th></tr>
+<tr><td>Row 5</td><td>Brian 11 +/-</td></tr>
+<tr><td>Row 6</td><td>Bob 11 +/-</td></tr>
+<tr><td>Row 7</td><td>Patrick 11 +/-</td></tr>
+<tr><td>Row 8</td><td>Martin 11 +/-</td></tr>
+</table>
+
+<ul>
+    <li>Static labels only — no scoring logic</li>
+    <li>Blank until a name is entered</li>
+    <li>Updates live as names are typed</li>
+    <li>Each card resolves its own names independently</li>
+    <li>Prints correctly in Color and B&W</li>
+    <li>Rows 1–4 unchanged</li>
+</ul>
+
+<h2>New Feature 2 — Individual 13s Game Profile</h2>
+
+<p>Identical to Individual 11s, but with <strong>13 +/-</strong>:</p>
+
+<table>
+<tr><th>Row</th><th>Label Example</th></tr>
+<tr><td>Row 5</td><td>Brian 13 +/-</td></tr>
+<tr><td>Row 6</td><td>Bob 13 +/-</td></tr>
+<tr><td>Row 7</td><td>Patrick 13 +/-</td></tr>
+<tr><td>Row 8</td><td>Martin 13 +/-</td></tr>
+</table>
+
+<p>Same live-update and per-card independence rules apply.</p>
+
+<h2>New Feature 3 — Game Dropdown Sorted Numerically then Alphabetically</h2>
+
+<p>The Select Game dropdown is now sorted with numeric entries first, then A–Z:</p>
+
+<table>
+<tr><th>#</th><th>Game</th></tr>
+<tr><td>1</td><td>— Select Game —</td></tr>
+<tr><td>2</td><td>15 / 20 Balls</td></tr>
+<tr><td>3</td><td>15/20 Balls Stableford</td></tr>
+<tr><td>4</td><td>Arizona Shuffle</td></tr>
+<tr><td>5</td><td>Individual 11s</td></tr>
+<tr><td>6</td><td>Individual 13s</td></tr>
+<tr><td>7</td><td>Lone Ranger / Scramble</td></tr>
+<tr><td>8</td><td>Montana Mayhem</td></tr>
+<tr><td>9</td><td>One Gross / Two Low Net</td></tr>
+<tr><td>10</td><td>Three Low Net</td></tr>
+<tr><td>11</td><td>Two Low Net</td></tr>
+<tr><td>12</td><td>Two Low Net + Slop</td></tr>
+</table>
+
+<h2>Technical Implementation — 6 Patches Applied</h2>
+
+<table>
+<tr><th>Patch</th><th>Detail</th></tr>
+<tr><td>P1</td><td>Added individual-11s and individual-13s to GAME_PROFILES</td></tr>
+<tr><td>P2</td><td>Added playerName branch to applyGameProfile()</td></tr>
+<tr><td>P3</td><td>Added refreshPlayerNameGameRows() helper</td></tr>
+<tr><td>P4</td><td>Hooked refreshPlayerNameGameRows() to .pname inputs</td></tr>
+<tr><td>P5</td><td>Hooked refreshPlayerNameGameRows() to Setup Panel name fields</td></tr>
+<tr><td>P6</td><td>Reordered dropdown options numerically then A–Z</td></tr>
+</table>
+
+<h2>No Regressions — All Systems Confirmed Intact</h2>
+
+<table>
+<tr><th>System</th><th>Status</th></tr>
+<tr><td>All 10 existing Game Profiles</td><td class="check">✅ Intact</td></tr>
+<tr><td>Arizona Shuffle & Montana Mayhem</td><td class="check">✅ Intact</td></tr>
+<tr><td>15/20 Balls Stableford</td><td class="check">✅ Intact</td></tr>
+<tr><td>Course Profiles</td><td class="check">✅ Intact</td></tr>
+<tr><td>Match Play updates</td><td class="check">✅ Intact</td></tr>
+<tr><td>4-card save/sync</td><td class="check">✅ Intact</td></tr>
+<tr><td>HG Blue/White rating</td><td class="check">✅ Intact</td></tr>
+<tr><td>Print layout</td><td class="check">✅ Intact</td></tr>
+<tr><td>Default game selection</td><td class="check">✅ Intact</td></tr>
+<tr><td>White #fff background</td><td class="check">✅ Intact</td></tr>
+</table>
