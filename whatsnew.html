@@ -1,0 +1,154 @@
+<div id="sidebar-content">
+<h1>What’s New – Build 94</h1>
+<p>Released: July 8, 2026 · Built from v93 baseline</p>
+
+<style>
+    /* SCOPE ALL STYLES TO THE SIDEBAR ONLY */
+    #sidebar-content {
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5;
+        color: #222;
+        padding-right: 10px;
+    }
+
+    #sidebar-content h1 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+
+    #sidebar-content h2 {
+        margin-top: 22px;
+        font-size: 18px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 4px;
+    }
+
+    #sidebar-content h3 {
+        margin-top: 18px;
+        font-size: 16px;
+    }
+
+    #sidebar-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 13px;
+    }
+
+    #sidebar-content table th,
+    #sidebar-content table td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: left;
+    }
+
+    #sidebar-content ul {
+        padding-left: 20px;
+        font-size: 14px;
+    }
+
+    #sidebar-content .small {
+        font-size: 12px;
+        color: #555;
+    }
+
+    #sidebar-content .check {
+        font-size: 16px;
+    }
+</style>
+
+<h2>New Feature — Individual Stableford Game Profile (v94.5)</h2>
+<p>A new game type <strong>Individual Stableford</strong> has been added to the Game dropdown. When selected, Rows 5–8 automatically populate with each player's name followed by <strong>POINTS</strong>:</p>
+
+<table>
+<tr><th>Row</th><th>Label Example</th></tr>
+<tr><td>Row 5</td><td>Brian POINTS</td></tr>
+<tr><td>Row 6</td><td>Bob POINTS</td></tr>
+<tr><td>Row 7</td><td>Patrick POINTS</td></tr>
+<tr><td>Row 8</td><td>Martin POINTS</td></tr>
+</table>
+
+<ul>
+    <li>Static labels only — no scoring logic</li>
+    <li>Blank until a name is entered</li>
+    <li>Updates live as names are typed</li>
+    <li>Each card resolves its own names independently</li>
+    <li>Prints correctly in Color and B&W</li>
+    <li>Rows 1–4 unchanged</li>
+</ul>
+
+<h2>Scramble Team Card — Back Panel Rewrite (v94.6)</h2>
+<p>The back panel of the Scramble Team Card has been completely rewritten. All three sections are now Scramble-specific.</p>
+
+<h3>Section 1 — LG3 Local Rules (7 rules)</h3>
+<ul>
+    <li>Root Relief — free relief if roots interfere with stance or swing</li>
+    <li>Wildlife Relief — free relief from gators, snakes, or protected wildlife</li>
+    <li>Embedded Ball Relief — through the green</li>
+    <li>Cart Path Relief — standard USGA relief</li>
+    <li>Safety Relief — nearest safe point, no penalty</li>
+    <li>Gimmies — inside the leather (33–34 inches)</li>
+    <li>Hole 18 Water Hazard — designated drop area</li>
+</ul>
+
+<h3>Section 2 — Scramble Rules (Team Format) (12 rules)</h3>
+<ul>
+    <li>Four player USGA Scramble format</li>
+    <li>All players tee off → select best shot → all play from that spot</li>
+    <li>One team score per hole (Gross & Net)</li>
+    <li>Team Handicap uses USGA recommended method</li>
+    <li>Minimum 3 tee shots per player</li>
+    <li>Place ball within 1 club length (same cut)</li>
+    <li>On green: place within 6 inches</li>
+    <li>In bunkers: rake and place</li>
+    <li>Penalty areas: all players drop in same relief area</li>
+    <li>Lost ball / OB: proceed under USGA rules</li>
+    <li>No strokes after ball is holed</li>
+    <li>Scramble rounds not posted to GHIN</li>
+</ul>
+
+<h3>Section 3 — Weekly Game Notes (2 items)</h3>
+<ul>
+    <li>Weather, pace, rulings, and tie breaks at LG3 Committee discretion</li>
+    <li>Have fun, play fast, enjoy the chaos</li>
+</ul>
+
+<h2>Print Both — Fully Redesigned (v94.7 · v94.8 · v94.9 · v94.10)</h2>
+<p>The Print Both workflow now produces a 2-page duplex PDF:</p>
+
+<ul>
+    <li><strong>Page 1:</strong> Card 1 (top slot) + Card 2 (bottom slot)</li>
+    <li><strong>Page 2:</strong> Shared back panel</li>
+</ul>
+
+<p>Workflow:</p>
+<ul>
+    <li>Build Card 1 → Save</li>
+    <li>Build Card 2 → Save</li>
+    <li>Print Both → duplex PDF</li>
+</ul>
+
+<h2>Print Sizing Fix — Canon Printer (v94.10)</h2>
+<p>Card height inside PDF set to 3.75 inches with 0.25-inch inset. Prevents perforation overlap and ensures clean duplex output.</p>
+
+<h2>UI Fixes (v94.3 · v94.4)</h2>
+<ul>
+    <li><strong>Team Card Border:</strong> Full-height border restored</li>
+    <li><strong>Format Toggle Spacing:</strong> Buttons now visually separated</li>
+</ul>
+
+<h2>Build Summary</h2>
+<table>
+<tr><th>Sub-version</th><th>Change</th></tr>
+<tr><td>94.1</td><td>Sub-version numbering established; baseline audit</td></tr>
+<tr><td>94.2</td><td>Team Scramble Card back panel structure restored</td></tr>
+<tr><td>94.3</td><td>Team card full-height border fix</td></tr>
+<tr><td>94.4</td><td>Format toggle buttons separated</td></tr>
+<tr><td>94.5</td><td>Individual Stableford profile added</td></tr>
+<tr><td>94.6</td><td>Scramble Team Card back panel rewritten</td></tr>
+<tr><td>94.7</td><td>Print Both back page capture bug fixed</td></tr>
+<tr><td>94.8</td><td>Print Both redesigned</td></tr>
+<tr><td>94.9</td><td>Print Both back page restored</td></tr>
+<tr><td>94.10</td><td>Print sizing fixed for Canon printer — LIVE BUILD</td></tr>
+</table>
+</div>
