@@ -1,0 +1,294 @@
+<div id="sidebar-content">
+<h1>What's New – Build 95</h1>
+<p>Released: July 20, 2026 · Built from v94.10 baseline</p>
+
+<style>
+    /* SCOPE ALL STYLES TO THE SIDEBAR ONLY */
+    #sidebar-content {
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5;
+        color: #222;
+        padding-right: 10px;
+    }
+
+    #sidebar-content h1 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+
+    #sidebar-content h2 {
+        margin-top: 22px;
+        font-size: 18px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 4px;
+    }
+
+    #sidebar-content h3 {
+        margin-top: 18px;
+        font-size: 16px;
+    }
+
+    #sidebar-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 13px;
+    }
+
+    #sidebar-content table th,
+    #sidebar-content table td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: left;
+    }
+
+    #sidebar-content ul {
+        padding-left: 20px;
+        font-size: 14px;
+    }
+
+    #sidebar-content .small {
+        font-size: 12px;
+        color: #555;
+    }
+
+    #sidebar-content .check {
+        font-size: 16px;
+    }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.1 – v95.8  ·  Internal development versions
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Internal Development Releases (v95.1 – v95.8)</h2>
+<p class="small">These versions covered internal development and refinement of the HCP dropdown sync system for Scramble and Chapman team cards, Chapman game selection persistence, and foundational groundwork for the Par 5 shade toggle. No user-facing feature changes were released in these versions.</p>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.9 · Par 5 Shade Toggle — Initial Implementation
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Par 5 Shade Toggle — Button &amp; Color System (v95.9)</h2>
+<p>Added a <strong>Par 5 Shade Toggle</strong> button to the card control bar. Allows switching column shading from Par 3 holes (amber) to Par 5 holes (blue) for quick visual reference during play.</p>
+<ul>
+    <li>New <strong>Shade: Par 3 / Shade: Par 5</strong> toggle button added to the button row</li>
+    <li>Added CSS variables <code>--par5</code> (blue <code>#d4eaf7</code>) and <code>--par5bw</code> (grey <code>#d8d8d8</code>)</li>
+    <li>Button label and color update to reflect the active shade mode</li>
+    <li>Par 5 shading prints correctly in both Color and B&amp;W modes</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.10 · Par 5 Shade — Full CSS Class System
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Par 5 Shade Toggle — Full CSS Class System (v95.10)</h2>
+<p>Complete CSS and JavaScript implementation for the Par 5 shade toggle introduced in v95.9.</p>
+<ul>
+    <li>Added <code>body.p5-shade</code> class — toggles Par 3 amber off and Par 5 blue on across all cell types</li>
+    <li>Added <code>.p5c</code> cell class to all Par 5 columns in <code>buildTable</code></li>
+    <li>Added <code>isP5()</code> helper function and <code>PAR5</code> / <code>P5_MODE</code> global variables</li>
+    <li>Chapman and Scramble team cards rebuild correctly when shade mode is toggled mid-session</li>
+    <li>B&amp;W theme shades Par 5 columns in grey when toggle is active</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.11 · Internal stabilization
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Internal Stabilization Release (v95.11)</h2>
+<p class="small">Internal stabilization build between the Par 5 shade toggle implementation and the back panel print guard fixes. No user-facing feature changes.</p>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.12 · Back Panel Print Guards
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Back Panel Print Guards — All PDF Paths (v95.12)</h2>
+<p>Fixed a class of bugs where Scramble and Chapman back panels did not display correctly when captured across multi-card PDF output paths.</p>
+<ul>
+    <li>Fixed <strong>Print Both</strong> — back panels now display the correct Scramble or Chapman rules content per card type</li>
+    <li>Fixed <strong>Print All</strong> — back panel content resolves correctly across all paired card combinations</li>
+    <li>Chapman card now rebuilds correctly when captured in <code>buildPairedPDF</code> and <code>generate2UpPDF</code> flows</li>
+    <li>Team notes panel visibility correctly scoped to team cards only — no bleed into individual card output</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.13 · P3G / P3N Column Header Dynamic Labels
+     ═══════════════════════════════════════════════════════════ -->
+<h2>P3G / P3N Column Headers — Dynamic Toggle Labels (v95.13)</h2>
+<p>The Par 3 summary column headers now relabel dynamically when the Par 5 shade toggle is active.</p>
+<ul>
+    <li>Headers relabel to <strong>P5 G / P5 N</strong> when Par 5 shade mode is active</li>
+    <li>Headers restore to <strong>P3 G / P3 N</strong> when toggled back to Par 3 mode</li>
+    <li>Element IDs <code>hdr-p3g</code> and <code>hdr-p3n</code> added for reliable DOM targeting</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.14 · USGA Scramble Handicap Formula Correction
+     ═══════════════════════════════════════════════════════════ -->
+<h2>USGA Scramble Handicap Formula Corrected (v95.14)</h2>
+<p>The four-player USGA Scramble team handicap formula was corrected to match official USGA guidelines.</p>
+
+<table>
+<tr><th>Player</th><th>Previous Formula</th><th>Corrected Formula</th></tr>
+<tr><td>Player A (lowest)</td><td>20%</td><td><strong>25%</strong></td></tr>
+<tr><td>Player B</td><td>15%</td><td><strong>20%</strong></td></tr>
+<tr><td>Player C</td><td>10%</td><td><strong>15%</strong></td></tr>
+<tr><td>Player D (highest)</td><td>5%</td><td><strong>10%</strong></td></tr>
+</table>
+
+<ul>
+    <li>Applies to all four-player Scramble team handicap calculations</li>
+    <li>Three-player (20/15/10) and two-player (35/15) formulas unchanged</li>
+    <li>Chapman handicap formula unchanged</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.15 · Weekly Game Notes — Editable Block
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Weekly Game Notes — Now Fully Editable (v95.15)</h2>
+<p>The <strong>Weekly Game Notes</strong> block on the Scramble and Chapman team card back panels is now a live editable field. Previously it displayed hardcoded placeholder text.</p>
+<ul>
+    <li>Click anywhere in the block to type — fully <code>contenteditable</code></li>
+    <li>Placeholder hint text (<em>"Click to add game notes for this week…"</em>) displays when the block is empty</li>
+    <li>Notes persist with the card and print correctly on the back panel</li>
+    <li>Applies to both Scramble and Chapman team card back panels</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.17 · New Game Profile — Sixes
+     ═══════════════════════════════════════════════════════════ -->
+<h2>New Game Profile — Sixes (v95.17)</h2>
+<p><strong>Sixes</strong> is a 3-player analog points game played within a threesome. It is now available in the Individual game format dropdown on the Stroke Play card.</p>
+
+<h3>Scoring</h3>
+<table>
+<tr><th>Result per Hole</th><th>Points Awarded</th></tr>
+<tr><td>Outright Win</td><td>6 points</td></tr>
+<tr><td>Two-Way Tie</td><td>3 points each</td></tr>
+<tr><td>Three-Way Tie</td><td>2 points each</td></tr>
+</table>
+
+<h3>Card Layout</h3>
+<ul>
+    <li>Rows 1–4: standard player name rows — unchanged</li>
+    <li>Rows 5–7: <strong>P1 SIXES / P2 SIXES / P3 SIXES</strong> — blank analog scoring rows</li>
+    <li>Row 8: blank — consistent with all other analog game profiles</li>
+    <li>Scoring reference bar displayed below the card when Sixes is active:<br>
+        <em>SIXES: Outright Win = 6 pts &nbsp;|&nbsp; Two-Way Tie = 3 pts each &nbsp;|&nbsp; Three-Way Tie = 2 pts each</em></li>
+    <li>Reference bar hidden automatically when any other game is selected</li>
+    <li>All OUT / IN / TOTAL cells are blank — fully analog, no digital calculations</li>
+    <li>No footer, no summary rows, no scoring logic</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.18 · Descender Fix + Sixes Footer Font
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Player Name Descender Fix &amp; Sixes Footer Font (v95.18)</h2>
+
+<h3>Descender Clipping Fix</h3>
+<p>Letters with descenders (<strong>g, j, y, p, q</strong>) were being clipped in player name rows on printed PDF output.</p>
+<ul>
+    <li>Added <code>overflow: visible</code> and <code>padding-bottom</code> to player name row cells</li>
+    <li>Fixed in both screen display and print media query</li>
+    <li>Applies to all game profiles — Stroke Play, Team, and all Individual formats</li>
+</ul>
+
+<h3>Sixes Reference Bar Font</h3>
+<ul>
+    <li>Sixes scoring reference bar font increased from 7.5pt to <strong>9pt</strong></li>
+    <li>Padding widened for improved legibility on screen and in print</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.19 · Sixes Rows — Last Name + P/H
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Sixes Scoring Rows — Last Name + P/H (v95.19)</h2>
+<p>Sixes scoring rows now display last name only with a compact <strong>P/H</strong> (Points per Hole) suffix, replacing the previous full name + SIXES format.</p>
+
+<table>
+<tr><th>Previous Label</th><th>New Label</th></tr>
+<tr><td>Lou Zulli SIXES</td><td><strong>Zulli P/H</strong></td></tr>
+<tr><td>Dan Conlon SIXES</td><td><strong>Conlon P/H</strong></td></tr>
+<tr><td>Dwight Ford SIXES</td><td><strong>Ford P/H</strong></td></tr>
+</table>
+
+<ul>
+    <li>Last name extracted automatically — handles single names, compound names, and any length</li>
+    <li>Labels update live as names are typed or changed during setup</li>
+    <li>More compact label — fits the narrow row header column without overflow</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.20 · New Game Profile — Quota Game
+     ═══════════════════════════════════════════════════════════ -->
+<h2>New Game Profile — Quota Game (v95.20)</h2>
+<p><strong>Quota Game</strong> is a Stableford-based individual points format where each player competes against a personal target score derived from their course handicap. Now available in the Individual game format dropdown.</p>
+
+<h3>Quota Calculation</h3>
+<p><strong>Quota = 36 − Course Handicap</strong> &nbsp;·&nbsp; Reads live from each player's CH display as GHIN and tee data are entered.</p>
+
+<table>
+<tr><th>Course Handicap</th><th>Quota</th><th>Scoring Row Label</th></tr>
+<tr><td>9</td><td>27</td><td>Zulli (27) POINTS</td></tr>
+<tr><td>14</td><td>22</td><td>Conlon (22) POINTS</td></tr>
+<tr><td>18</td><td>18</td><td>Ford (18) POINTS</td></tr>
+<tr><td>22</td><td>14</td><td>Liberty (14) POINTS</td></tr>
+</table>
+
+<h3>Card Behavior</h3>
+<ul>
+    <li>Scoring rows display <strong>LASTNAME (QUOTA) POINTS</strong> — updates live as GHIN or tee changes</li>
+    <li>Uses the existing Stableford scoring grid — zero layout changes</li>
+    <li>No footer — players compute <em>Total Points − Quota</em> manually after the round</li>
+    <li>All scoring is analog — no digital calculations</li>
+    <li>Prints exactly like Individual Stableford</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.21 · Quota Game — Player 4 Label Bug Fix
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Quota Game — Player 4 Label Fix (v95.21)</h2>
+<p>Fixed a bug where the Quota Game scoring row label for <strong>Player 4</strong> failed to display the quota number unless the user tabbed away to a non-existent next field after data entry.</p>
+<ul>
+    <li><strong>Root cause:</strong> The quota label refresh was not correctly wired into <code>calcHcp()</code>. Labels updated on player name input only — not when GHIN index or tee data was entered.</li>
+    <li><strong>Fix:</strong> <code>refreshPlayerNameGameRows()</code> now fires at the end of <code>calcHcp()</code> for all four players — immediately on GHIN or tee entry, no tab-away required</li>
+    <li>Player 4 quota label now calculates correctly in all entry sequences</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.22 · Quota Game — Weekly Game Notes Auto-Fill
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Quota Game — Weekly Game Notes Auto-Fill (v95.22)</h2>
+<p>When <strong>Quota Game</strong> is selected, the Weekly Game Notes block on the back panel automatically populates with the standard Quota payout rules.</p>
+
+<h3>Auto-Fill Content</h3>
+<ul>
+    <li>Only golfers who finish <strong>over</strong> their quota earn shares of the pot</li>
+    <li>Your "+" number = your shares &mdash; Beat quota by +3 &rarr; 3 shares</li>
+    <li>Finish at 0 or negative &rarr; 0 shares</li>
+    <li>Total shares = sum of all positive "+" numbers</li>
+    <li>Payout per share: &nbsp;Pot &divide; Total Shares</li>
+    <li>Golfer payout: &nbsp;Shares &times; Payout per Share</li>
+    <li><em>If no golfer beats quota, all buy-ins are returned for that week</em></li>
+</ul>
+
+<h3>Smart Fill Behavior</h3>
+<ul>
+    <li>Auto-fills <strong>only if the notes block is currently empty</strong> — never overwrites custom entries</li>
+    <li>Block remains <strong>fully editable</strong> after auto-fill — modify, add to, or clear as needed each week</li>
+    <li>Switching away from Quota Game auto-clears the default payout text</li>
+    <li>User-edited content is always preserved when switching between game formats</li>
+    <li>Font and size match the existing rules block (8pt Arial Narrow)</li>
+</ul>
+
+<p class="small">Build 95 closed: July 20, 2026. &nbsp;|&nbsp; Next: Build 96 — Four-Person Shamble Team Card.</p>
+
+</div>
