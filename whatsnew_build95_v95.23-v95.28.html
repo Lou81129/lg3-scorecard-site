@@ -1,0 +1,205 @@
+<div id="sidebar-content">
+<h1>What's New – Build 95</h1>
+<p>Released: July 20, 2026 · Updated: August 19, 2026 · Built from v94.10 baseline</p>
+
+<style>
+    /* SCOPE ALL STYLES TO THE SIDEBAR ONLY */
+    #sidebar-content {
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5;
+        color: #222;
+        padding-right: 10px;
+    }
+
+    #sidebar-content h1 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+
+    #sidebar-content h2 {
+        margin-top: 22px;
+        font-size: 18px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 4px;
+    }
+
+    #sidebar-content h3 {
+        margin-top: 18px;
+        font-size: 16px;
+    }
+
+    #sidebar-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 13px;
+    }
+
+    #sidebar-content table th,
+    #sidebar-content table td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: left;
+    }
+
+    #sidebar-content ul {
+        padding-left: 20px;
+        font-size: 14px;
+    }
+
+    #sidebar-content .small {
+        font-size: 12px;
+        color: #555;
+    }
+
+    #sidebar-content .check {
+        font-size: 16px;
+    }
+</style>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.23 · Bug Fixes — Shade Button Duplicate + Print Both Team Rules
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Bug Fixes — Shade Button &amp; Print Both Team Rules (v95.23)</h2>
+
+<h3>Bug 1 — Duplicate Shade Toggle Button</h3>
+<p>Two identical <strong>Shade: Par 3</strong> buttons appeared side by side in the control bar. Only the first was wired to the event listener — the second was completely non-functional.</p>
+<ul>
+    <li>Root cause: duplicate <code>id="btn-shade-toggle"</code> button element in the HTML</li>
+    <li>Fix: second duplicate button removed — one button, correctly wired</li>
+</ul>
+
+<h3>Bug 2 — Print Both Reveals Team Rules Boxes on Screen</h3>
+<p>When <strong>Print Both</strong> was used on an individual card, the Scramble and Chapman team rules boxes became visible on screen immediately after the PDF was captured — they did not print but were visible.</p>
+<ul>
+    <li>Root cause: after PDF capture, <code>buildPairedPDF</code> and <code>generate2UpPDF</code> restored the team rules divs to <code>display:''</code> (empty string) — clearing the inline style handed control back to the CSS default (<code>display:block</code>), making both boxes visible</li>
+    <li>Fix: both functions now explicitly restore to <code>display:'none'</code></li>
+    <li>Team rules boxes are invisible before, during, and after all print operations when on individual cards</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.24 · Bug Fix — Shade Toggle Double Listener
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Bug Fix — Shade Toggle Double Listener (v95.24)</h2>
+<p>After the duplicate HTML button was removed in v95.23, the shade toggle still failed to work. Clicking the button appeared to do nothing.</p>
+<ul>
+    <li>Root cause: two <code>addEventListener</code> calls were bound to <code>btn-shade-toggle</code> in JavaScript. Each click fired <code>P5_MODE=!P5_MODE</code> twice — toggling on then immediately back off. Net result: no visible change</li>
+    <li>The second listener was an incomplete duplicate — it was missing the P3G/P3N column header rename logic entirely</li>
+    <li>Fix: second (incomplete) listener removed; the first, complete listener retained</li>
+</ul>
+
+<h3>Confirmed Toggle Behavior</h3>
+<table>
+<tr><th>State</th><th>Button Label</th><th>Column Headers</th><th>Shaded Holes</th></tr>
+<tr><td>Default</td><td>Shade: Par 3</td><td>P3 G / P3 N</td><td>Par 3 holes (amber)</td></tr>
+<tr><td>Toggled</td><td>Shade: Par 5</td><td><strong>P5 G / P5 N</strong></td><td>Par 5 holes (blue)</td></tr>
+</table>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.25 · Bug Fix — P5G / P5N Headers Reset on Print
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Bug Fix — P5G / P5N Column Headers Reset on Print (v95.25)</h2>
+<p>When Par 5 shade mode was active, the P5G / P5N column headers displayed correctly on screen but reverted to <strong>P3G / P3N</strong> on the printed scorecard.</p>
+
+<h3>Root Cause</h3>
+<p>The Par 5 shading carried through print correctly because it is CSS-class based (<code>body.p5-shade</code>) — a class that survives any table rebuild. The column header text, however, is DOM text content — reset to "P3 G" / "P3 N" every time <code>buildTable()</code> runs, including on every print and PDF rebuild path.</p>
+
+<h3>Fix</h3>
+<ul>
+    <li><code>buildTable()</code> now checks <code>P5_MODE</code> immediately after generating the header row and applies "P5 G" / "P5 N" on the spot</li>
+    <li>Every rebuild — screen, Print Card, Print Both, Print All — now always reflects the active shade state</li>
+    <li>Toggling back to Par 3 mode restores P3 G / P3 N correctly on all paths</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.26 · Gender-Aware Course Handicap Calculation
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Gender-Aware Course Handicap Calculation (v95.26)</h2>
+<p>Course Handicap calculations now correctly use Ladies' course ratings and slope when a female player is in the group. Previously all players were calculated against Men's ratings regardless of gender.</p>
+
+<h3>Gender Selector</h3>
+<ul>
+    <li>Each of the four player setup blocks now includes a <strong>Gender</strong> dropdown — <em>M — Men's</em> (default) or <em>F — Ladies'</em></li>
+    <li>Changing the gender immediately recalculates that player's CH and PH using the correct tee rating</li>
+    <li>Each player's gender is independent — mixed groups (e.g., three men and one woman) are fully supported</li>
+    <li>The CH / PH display line shows the tee rating used, e.g.: <code>CH: 12 | PH: 12 (Red L 70.8/129)</code> — the <strong>L</strong> confirms ladies' ratings are active</li>
+</ul>
+
+<h3>Ladies' Ratings Added — Tampa Palms G&amp;CC</h3>
+<table>
+<tr><th>Tee</th><th>Men's CR / Slope</th><th>Ladies' CR / Slope</th></tr>
+<tr><td>1 – Gold</td><td>75.4 / 143</td><td><em>No ladies' rating — men's used as fallback</em></td></tr>
+<tr><td>2 – Blue</td><td>72.8 / 140</td><td><strong>78.9 / 144</strong></td></tr>
+<tr><td>3 – Blue/White</td><td>71.6 / 136</td><td><strong>77.5 / 140</strong></td></tr>
+<tr><td>4 – White</td><td>69.7 / 133</td><td><strong>75.3 / 137</strong></td></tr>
+<tr><td>5 – Red</td><td>65.6 / 122</td><td><strong>70.8 / 129</strong></td></tr>
+<tr><td>6 – Combo</td><td>67.4 / 128</td><td><strong>72.8 / 133</strong></td></tr>
+</table>
+
+<p class="small">Tee 1 Gold has no established ladies' rating at Tampa Palms. If a woman selects Tee 1, the men's rating (75.4/143) is used as a fallback.</p>
+
+<h3>calcCH() Updated</h3>
+<ul>
+    <li><code>calcCH(ghin, tee, gender)</code> — gender parameter added</li>
+    <li>When <code>gender='F'</code> and the selected tee has a ladies' rating, <code>lRating</code> and <code>lSlope</code> are used in place of the men's values</li>
+    <li>When <code>gender='M'</code> or no ladies' rating exists for the tee, men's ratings are used — no change to existing behavior</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.27 · Bug Fix — Gender Not Saved in Card State
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Bug Fix — Gender Not Persisting in Card State (v95.27)</h2>
+<p>After setting a player's gender to <strong>F — Ladies'</strong>, the CH still calculated against men's ratings. The gender selector was wired correctly but the selection was not surviving card save/restore cycles.</p>
+
+<h3>Root Cause</h3>
+<ul>
+    <li><code>saveCurrentCardToStore()</code> never wrote <code>gender</code> to the card's player state — it was silently discarded on every save</li>
+    <li><code>loadCardFromStore()</code> never read <code>gender</code> back — the HTML select defaulted to M before <code>calcHcp()</code> fired, overriding any selection the user had made</li>
+    <li>Since <code>saveState()</code> fires at the end of <code>calcHcp()</code>, every GHIN or tee entry triggered a save that overwrote gender to undefined</li>
+</ul>
+
+<h3>Fix</h3>
+<ul>
+    <li><code>saveCurrentCardToStore()</code> now writes <code>gender</code> per player alongside name, GHIN, and tee</li>
+    <li><code>loadCardFromStore()</code> now restores the gender select <strong>before</strong> <code>calcHcp()</code> fires — ensuring the correct CR/Slope is used on the very first calculation after load</li>
+    <li>Gender persists correctly through card switches, Print Both, Print All, and page reloads</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v95.28 · Bug Fix — Ladies' Ratings Not Reaching calcCH()
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Bug Fix — Ladies' Ratings Not Reaching calcCH() (v95.28)</h2>
+<p>After v95.27, gender persisted correctly and <code>calcCH()</code> received <code>gender='F'</code> — but the ladies' CR/Slope values were still <code>undefined</code> inside the function, causing the men's ratings to be used as fallback. CH still read incorrectly for female players.</p>
+
+<h3>Root Cause</h3>
+<p>There are two <code>TEES=</code> assignments in the code:</p>
+<ul>
+    <li><strong>Global initializer</strong> — runs once on page load using the default course (Tampa Palms). This is the assignment that <code>getTee()</code> reads from during normal play.</li>
+    <li><strong><code>applyCourseProfile()</code></strong> — only runs when the user changes the course dropdown. Since Tampa Palms is pre-selected, this never fires during a normal session.</li>
+</ul>
+<p>The v95.26 patch added <code>lRating</code> / <code>lSlope</code> to the <code>applyCourseProfile()</code> assignment only. The global initializer — the one that actually matters — was left unchanged, stripping ladies' ratings before they could reach <code>getTee()</code>.</p>
+
+<h3>Fix</h3>
+<ul>
+    <li>Global TEES initializer updated to include <code>lRating:t.lRating, lSlope:t.lSlope</code> alongside <code>rating</code> and <code>slope</code></li>
+    <li>Both <code>TEES=</code> assignments now pass ladies' ratings through — page load and course change paths are both correct</li>
+    <li><code>getTee()</code> now returns complete tee objects with ladies' data available to <code>calcCH()</code></li>
+</ul>
+
+<h3>Verified Math — Kat Schwendeman, GHIN 11.7, Tee 5 Red, F</h3>
+<table>
+<tr><th></th><th>Before Fix (Men's fallback)</th><th>After Fix (Ladies')</th></tr>
+<tr><td>CR / Slope used</td><td>65.6 / 122</td><td><strong>70.8 / 129</strong></td></tr>
+<tr><td>Calculation</td><td>11.7 × 122 ÷ 113 + (65.6 − 72) = 6.2</td><td>11.7 × 129 ÷ 113 + (70.8 − 72) = 12.2</td></tr>
+<tr><td>Course Handicap</td><td>6 ❌</td><td><strong>12 ✅ — matches GHIN</strong></td></tr>
+</table>
+
+<p class="small">Build 95 locked: August 19, 2026 at v95.28. &nbsp;|&nbsp; Next: Build 96 — Four-Person Shamble Team Card.</p>
+
+</div>
