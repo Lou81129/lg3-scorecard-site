@@ -1,0 +1,306 @@
+<div id="sidebar-content">
+<h1>What's New – Build 96</h1>
+<p>Released: September 14, 2026 &middot; Built from v96.11 baseline</p>
+
+<style>
+    #sidebar-content {
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5;
+        color: #222;
+        padding-right: 10px;
+    }
+    #sidebar-content h1 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+    #sidebar-content h2 {
+        margin-top: 22px;
+        font-size: 18px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 4px;
+    }
+    #sidebar-content h3 {
+        margin-top: 18px;
+        font-size: 16px;
+    }
+    #sidebar-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 13px;
+    }
+    #sidebar-content table th,
+    #sidebar-content table td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: left;
+    }
+    #sidebar-content ul {
+        padding-left: 20px;
+        font-size: 14px;
+    }
+    #sidebar-content .small {
+        font-size: 12px;
+        color: #555;
+    }
+    #sidebar-content .check {
+        font-size: 16px;
+    }
+    #sidebar-content .note {
+        background: #fff8e1;
+        border-left: 4px solid #f9a825;
+        padding: 6px 10px;
+        margin: 8px 0;
+        font-size: 13px;
+    }
+    #sidebar-content .summary-table th {
+        background: #f0f0f0;
+    }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BUILD 96 OVERVIEW
+     ═══════════════════════════════════════════════════════════ -->
+<p>Build 96 is entirely focused on the <strong>Shamble Team Card</strong> — completing its design, fixing printing issues, and bringing it to production quality. All 12 versions in this build (v96.12–v96.23) address Shamble-specific improvements across back panel layout, color fidelity, typography, fold gutter, and Stableford scoring.</p>
+
+<table class="summary-table">
+    <thead>
+        <tr><th>Version</th><th>Category</th><th>Summary</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>v96.12</td><td>Bug Fix</td><td>Back panel scarlet headers invisible; CTP simplified; card sizing</td></tr>
+        <tr><td>v96.13</td><td>Enhancement</td><td>PAR/HDCP subtotals pre-filled; course name in header</td></tr>
+        <tr><td>v96.14</td><td>Enhancement</td><td>Full-width table; game dropdown alphabetical with default</td></tr>
+        <tr><td>v96.15</td><td>Enhancement</td><td>Official Ohio State PMS colors applied throughout</td></tr>
+        <tr><td>v96.16</td><td>Design</td><td>Redundant "LG3 Local Rules" heading removed from back panel</td></tr>
+        <tr><td>v96.17</td><td>Design</td><td>Player name and team score label typography — larger, bold, centered</td></tr>
+        <tr><td>v96.18</td><td>Design / Accessibility</td><td>Fold gutter (first pass); high-contrast dark text for senior readability</td></tr>
+        <tr><td>v96.19</td><td>Bug Fix</td><td>Stableford 15/20 card row misalignment corrected</td></tr>
+        <tr><td>v96.20</td><td>Enhancement</td><td>New Stableford points chart added to back panel dropdown</td></tr>
+        <tr><td>v96.21</td><td>Design</td><td>Fold gutter — two-table architecture (intermediate)</td></tr>
+        <tr><td>v96.22</td><td>Design</td><td>Fold gutter — single-table 23-column architecture (guaranteed alignment)</td></tr>
+        <tr><td>v96.23</td><td>Design</td><td>Label column narrowed to center the fold gutter on the card</td></tr>
+    </tbody>
+</table>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.12
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Bug Fixes — Back Panel Headers, CTP, Card Sizing (v96.12)</h2>
+
+<h3>Bug 1 — Scarlet Section Headers Invisible on Back Panel</h3>
+<p>The <strong>SHAMBLE FORMAT RULES</strong> and <strong>CLOSEST TO THE PIN — CTP</strong> section headers on the Shamble card back panel rendered as invisible — dark red bars with no visible text.</p>
+<ul>
+    <li>Root cause: a second <code>.bst { color: #000 !important }</code> rule in the CSS sheet was overriding the inline <code>color: #fff</code> on the scarlet header bars, forcing text to black on a dark red background</li>
+    <li>Fix: added new <code>.bst-sc</code> class with explicit <code>!important</code> white-on-scarlet styling; applied to both back panel section headers</li>
+</ul>
+
+<h3>Bug 2 — CTP Section Contained Unnecessary Fields</h3>
+<p>The Closest to the Pin section showed <em>Player: _______________ Dist: ______</em> fields for each hole, which are not needed on the card — the CTP section only needs to indicate which holes are in play.</p>
+<ul>
+    <li>Fix: Player and Distance fields removed; section now shows four clean checkboxes: Hole 2 (Par 3), Hole 9 (Par 3), Hole 13 (Par 3), Hole 17 (Par 3)</li>
+</ul>
+
+<h3>Bug 3 — Shamble Card Width Mismatched Scramble Card</h3>
+<p>The Shamble card used hardcoded <code>tc.style.width = '10.25in'</code> and <code>tc.style.height = '3.75in'</code> inline overrides that conflicted with the <code>#team-card</code> CSS dimensions used by the Scramble card.</p>
+<ul>
+    <li>Fix: inline width/height overrides removed; Shamble card now inherits <code>#team-card</code> CSS dimensions, matching the Scramble card on the same card stock</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.13
+     ═══════════════════════════════════════════════════════════ -->
+<h2>PAR/HDCP Subtotals &amp; Course Name in Header (v96.13)</h2>
+
+<h3>PAR Row — OUT, IN, TOT Pre-Filled</h3>
+<p>The OUT, IN, and TOT subtotal cells in the PAR row were rendering as empty gray boxes. The Scramble card fills these correctly; the Shamble card did not.</p>
+<ul>
+    <li>Fix: <code>outPar</code> and <code>inPar</code> totals computed from course profile and inserted into the respective subtotal cells; TOT = outPar + inPar</li>
+</ul>
+
+<h3>HDCP Row — Dashes in Subtotal Cells</h3>
+<p>The OUT, IN, and TOT cells in the HDCP row were also blank. These cells have no meaningful value, but should display a dash for visual consistency with the regular card.</p>
+<ul>
+    <li>Fix: subtotal cells now display an en dash (–) in all three positions</li>
+</ul>
+
+<h3>Course Name Added to Shamble Card Header</h3>
+<p>The Shamble card header bar showed only <em>LG3 · SHAMBLE TEAM CARD</em> with no course name — unlike all other card types which include the course.</p>
+<ul>
+    <li>Fix: course name pulled dynamically from the course-select dropdown and appended to the header: <em>LG3 · SHAMBLE TEAM CARD · Tampa Palms G&amp;CC</em></li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.14
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Full-Width Table &amp; Game Dropdown Order (v96.14)</h2>
+
+<h3>White Space Gap on Right Side of Card</h3>
+<p>The Shamble table left a visible white gap on the right side where the P3G/P3N columns would normally appear on a stroke play card. The fixed-inch colgroup summed to only ~10.27in, leaving ~0.73in unused on an 11in card.</p>
+<ul>
+    <li>Fix: switched from fixed-inch colgroup to percentage-based layout — label column 14%, each of 21 data columns 4.095% — totalling 100% and filling the full card width</li>
+    <li>Hardcoded <code>width: 1.45in</code> also removed from the label cell style; colgroup percentage now controls it</li>
+</ul>
+
+<h3>Game Dropdown — Default and Alphabetical Order</h3>
+<p>The Team Game dropdown did not have a default "select" option and listed games in an inconsistent order (Scramble → Chapman → Shamble).</p>
+<ul>
+    <li>Fix: dropdown now defaults to <em>— Select Game —</em></li>
+    <li>Games listed in alphabetical order: <strong>Chapman → Scramble → Shamble</strong></li>
+    <li>Saved game restore logic (<code>_savedGid</code>) preserved — selection persists through setup field changes</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.15
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Official Ohio State PMS Colors (v96.15)</h2>
+
+<p>Print testing revealed the gray rendering with a greenish cast. All scarlet and gray color values updated to the official Ohio State University PMS equivalents across all 26 occurrences in the file.</p>
+
+<table>
+    <thead>
+        <tr><th>Token</th><th>Old Value</th><th>New Value</th><th>Standard</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>--scarlet</code></td><td>#c8102e</td><td><strong>#BA0C2F</strong></td><td>PMS 200</td></tr>
+        <tr><td><code>--scar-lt</code></td><td>#fdecea</td><td>#F8E7EA</td><td>90% white tint</td></tr>
+        <tr><td><code>--scar-md</code></td><td>#f5b8be</td><td>#EAB6C1</td><td>70% white tint</td></tr>
+        <tr><td><code>--sgray</code></td><td>#4a4a4a</td><td><strong>#A7B1B7</strong></td><td>PMS 429</td></tr>
+        <tr><td><code>--sgray-lt</code></td><td>#f0f0f0</td><td>#F6F7F8</td><td>90% white tint</td></tr>
+        <tr><td><code>--sgray-md</code></td><td>#d0d0d0</td><td>#E5E8E9</td><td>70% white tint</td></tr>
+    </tbody>
+</table>
+<p class="small">Values updated in CSS <code>:root</code>, <code>buildShambleCard()</code> inline palette variables, <code>toggleBack()</code>, <code>setMode()</code>, back panel HTML, and CTP checkbox accent colors.</p>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.16
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Design — Redundant Heading Removed from Back Panel (v96.16)</h2>
+
+<p>The back panel Local Rules section displayed a redundant <strong>LG3 LOCAL RULES</strong> section heading immediately below the sentence <em>"USGA Rules of Golf apply except where modified by the LG3 Local Rules below."</em> The heading was unnecessary since the introductory sentence already identifies the section.</p>
+<ul>
+    <li>Fix: <code>&lt;div class="bst"&gt;LG3 LOCAL RULES&lt;/div&gt;</code> removed from back panel HTML</li>
+    <li>The USGA statement now flows directly into the rule bullets with no redundant label in between</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.17
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Design — Player Name &amp; Team Score Typography (v96.17)</h2>
+
+<p>Player names in the Player Scores section and labels in the Team Score section were too small and lacked visual weight for use on a physical scorecard. Both sets of labels had ample row height available.</p>
+
+<table>
+    <thead>
+        <tr><th>Element</th><th>Before</th><th>After</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Player name (score rows)</td><td>8pt, left-aligned</td><td><strong>11pt, bold, centered</strong></td></tr>
+        <tr><td>Player tee / Sham PH sub-label</td><td>7pt normal</td><td>7.5pt semi-bold italic</td></tr>
+        <tr><td>BEST BALL #1 / #2 / TOTAL +/−</td><td>8.5pt, left-aligned</td><td><strong>11pt, bold, centered</strong></td></tr>
+    </tbody>
+</table>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.18
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Design — Fold Gutter &amp; High-Contrast Text (v96.18)</h2>
+
+<h3>Fold Gutter — First Implementation</h3>
+<p>Physical fold testing showed hole 9 data was being lost in the card crease. The Shamble card needed a visible fold guide like the standard stroke play card.</p>
+<ul>
+    <li>OUT column width increased from equal-width data column to <strong>7%</strong> (nearly double) — pushes front nine left</li>
+    <li>All hole 10 cells given a <strong>4px solid scarlet left border</strong> — visible fold line across every row</li>
+    <li>Applied to: HOLE, PAR, HDCP, all four player rows, Drive Used, and all three Team Score rows</li>
+</ul>
+
+<h3>High-Contrast Text — Senior Readability</h3>
+<p>Print testing with senior golfers revealed that gray text on light gray backgrounds was very difficult to read. The PMS 429 gray (<code>#A7B1B7</code>) was being used as foreground text color in addition to backgrounds.</p>
+<ul>
+    <li>Introduced new dark text constant <code>DK = '#1A1A1A'</code> (near-black)</li>
+    <li><code>DK</code> replaces <code>GR (#A7B1B7)</code> everywhere it was used as a foreground text color</li>
+    <li>PMS 429 gray retained for backgrounds and borders only</li>
+    <li>Affected elements: PAR values, HDCP values, player tee/PH sub-labels, Drive row label, info bar text, dot markers</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.19
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Bug Fix — Stableford 15/20 Card Row Misalignment (v96.19)</h2>
+
+<p>The 15/20 Balls Stableford scorecard rendered with rows visibly misaligned — player score rows on the left panel appeared to sit opposite the Points rows on the right panel and vice versa.</p>
+<ul>
+    <li>Root cause: the right-panel table (<code>tbr</code>) appended its rows in reverse order compared to the left-panel table (<code>tbl</code>). Left table: score row first, then Points row. Right table: Points row first, then score row — causing every player's rows to be swapped across the fold</li>
+    <li>Fix: swapped <code>tbr.appendChild(_sfR)</code> and <code>tbr.appendChild(rpr)</code> — right table now appends score row first, Points row second, matching the left table order exactly</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.20
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Enhancement — New Stableford Points Chart (v96.20)</h2>
+
+<p>A new points scale was added to the Stableford reference chart dropdown on the back panel of the scorecard.</p>
+
+<table>
+    <thead>
+        <tr><th>Dropdown Label</th><th>Score</th><th>Points</th></tr>
+    </thead>
+    <tbody>
+        <tr><td rowspan="5"><strong>LG3 Modified Stableford 3</strong></td><td>Eagle</td><td>5</td></tr>
+        <tr><td>Birdie</td><td>4</td></tr>
+        <tr><td>Par</td><td>2</td></tr>
+        <tr><td>Bogey</td><td>1</td></tr>
+        <tr><td>Double Bogey or Worse</td><td>0</td></tr>
+    </tbody>
+</table>
+<p class="small">The back panel Stableford dropdown now contains five options: Not in play · Standard · Modified · LG3 Stableford · LG3 Modified 2 · LG3 Modified 3. All existing charts are unchanged.</p>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     v96.21 – v96.23
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Design — Shamble Card Fold Gutter Rework (v96.21–v96.23)</h2>
+
+<p>The fold gutter introduced in v96.18 (a wider OUT column + scarlet border) was replaced across three iterations with a more robust implementation that produces a true physical fold line identical to the standard stroke play card.</p>
+
+<h3>v96.21 — Two-Table Flex Architecture (Intermediate)</h3>
+<ul>
+    <li>Split Shamble card into two separate <code>&lt;table&gt;</code> elements in a flex container, with a <strong>6px solid scarlet <code>&lt;div&gt;</code> panel separator</strong> between them — matching the structural approach of the stroke play card</li>
+    <li>Left table: label + holes 1–9 + OUT; Right table: holes 10–18 + IN + TOT</li>
+    <li>Issue discovered: section divider rows (PLAYER SCORES, DRIVE USED, TEAM SCORE) had text content on the left and empty counterparts on the right, causing row height drift that cascaded into visible misalignment</li>
+</ul>
+
+<h3>v96.22 — Single-Table 23-Column Architecture</h3>
+<ul>
+    <li>Root cause of v96.21 misalignment: separate tables have independent layout engines — row heights cannot be synchronized across them</li>
+    <li>Solution: rebuilt as a <strong>single table with 23 columns</strong>, including a dedicated scarlet gutter column between OUT and hole 10</li>
+    <li>Column layout: label (14%) + 9 holes + OUT + <strong>gutter (0.5%, background: #BA0C2F)</strong> + 9 holes + IN + TOT = 100%</li>
+    <li>Section divider rows span all 23 columns via <code>colspan="23"</code> — no matching-row issue possible</li>
+    <li>Gutter cells include <code>-webkit-print-color-adjust: exact; print-color-adjust: exact</code> to ensure scarlet prints correctly</li>
+    <li>All rows guaranteed to align since they share the same table layout context</li>
+</ul>
+
+<h3>v96.23 — Label Column Narrowed for Centered Fold</h3>
+<p>With a 14% label column the gutter landed at approximately 6.05in — visibly to the right of the 5.5in card center. Narrowing the label column moves the gutter toward center.</p>
+<ul>
+    <li>Label column: <strong>14% → 8%</strong> (1.54in → 0.88in)</li>
+    <li>Data columns: 4.071% → 4.357% (wider, to fill the reclaimed space)</li>
+    <li>Gutter center: 6.05in → <strong>5.70in</strong> — 63% closer to the 5.5in fold</li>
+    <li>Player name font adjusted: 11pt → 10pt to fit narrower label cell</li>
+    <li>Team score labels adjusted: 11pt → 9pt</li>
+</ul>
+
+<div class="note">
+    <strong>Note:</strong> Mathematical perfect centering (5.5in) is not achievable with a single-table layout and any practical label width — it would require a label column of ~0.5in, too narrow for player name text. The 5.70in gutter position represents the optimal balance between centering and label legibility.
+</div>
+
+</div>
