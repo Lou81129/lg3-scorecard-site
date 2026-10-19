@@ -1,0 +1,284 @@
+<div id="sidebar-content">
+<h1>What's New – Build 97</h1>
+<p>Released: October 19, 2026 &middot; Built from v97.0 baseline</p>
+
+<style>
+    #sidebar-content {
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5;
+        color: #222;
+        padding-right: 10px;
+    }
+    #sidebar-content h1 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+    #sidebar-content h2 {
+        margin-top: 22px;
+        font-size: 18px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 4px;
+    }
+    #sidebar-content h3 {
+        margin-top: 18px;
+        font-size: 16px;
+    }
+    #sidebar-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 13px;
+    }
+    #sidebar-content table th,
+    #sidebar-content table td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: left;
+    }
+    #sidebar-content ul {
+        padding-left: 20px;
+        font-size: 14px;
+    }
+    #sidebar-content li {
+        margin-bottom: 4px;
+    }
+    #sidebar-content .small {
+        font-size: 12px;
+        color: #555;
+    }
+    #sidebar-content .check {
+        font-size: 16px;
+    }
+    #sidebar-content .note {
+        background: #fff8e1;
+        border-left: 4px solid #f9a825;
+        padding: 6px 10px;
+        margin: 8px 0;
+        font-size: 13px;
+    }
+    #sidebar-content .scarlet-note {
+        background: #F8E7EA;
+        border-left: 4px solid #BA0C2F;
+        padding: 6px 10px;
+        margin: 8px 0;
+        font-size: 13px;
+    }
+    #sidebar-content .summary-table th {
+        background: #f0f0f0;
+    }
+    #sidebar-content .badge {
+        display: inline-block;
+        padding: 1px 7px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-left: 4px;
+        vertical-align: middle;
+    }
+    #sidebar-content .badge-new    { background: #1a5c2e; color: #fff; }
+    #sidebar-content .badge-fix    { background: #c0392b; color: #fff; }
+    #sidebar-content .badge-design { background: #2471a3; color: #fff; }
+    #sidebar-content .badge-enhancement { background: #7d3c98; color: #fff; }
+    #sidebar-content .flight-table th { background: #BA0C2F; color: #fff; }
+    #sidebar-content .flight-table td { text-align: center; }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BUILD 97 OVERVIEW
+     ═══════════════════════════════════════════════════════════ -->
+<p>Build 97 delivers two major upgrades: <strong>expanded 6-card session support</strong> with a smart print-count selector, and a brand-new <strong>Flighted Low Gross / Low Net scorecard</strong> — the LG3's first flighted competition format. The flighted card was developed through seven refinement versions (v97.1–v97.7) to get typography, print sizing, back panel layout, and stroke dot readability exactly right.</p>
+
+<table class="summary-table">
+    <thead>
+        <tr><th>Version</th><th>Category</th><th>Summary</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>v97.0</td><td>Enhancement</td><td>6-card support, Cards-to-Print selector (2–6), 7:59 AM tee time</td></tr>
+        <tr><td>v97.1</td><td>New Feature</td><td>Flighted LG/LN scorecard — initial build with 3 flights, 2 rows/player, scarlet &amp; grey palette</td></tr>
+        <tr><td>v97.2</td><td>Bug Fix</td><td>GHIN field ID corrected; stroke dot calculation fixed; moved to Select Game dropdown</td></tr>
+        <tr><td>v97.3</td><td>Design</td><td>Back panel restructured — Flight Table center, Weekly Game Notes restored on right</td></tr>
+        <tr><td>v97.4</td><td>Enhancement</td><td>Larger text throughout for senior readability (row heights later reverted)</td></tr>
+        <tr><td>v97.5</td><td>Design</td><td>Stroke dots reverted to original size; kept darker weight (900) for visibility</td></tr>
+        <tr><td>v97.6</td><td>Design</td><td>Removed PH / stroke-hint text from NET row label for cleaner layout</td></tr>
+        <tr><td>v97.7</td><td>Bug Fix</td><td>Row heights reverted to standard card dimensions — resolved print clipping</td></tr>
+    </tbody>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════════
+     v97.0
+     ═══════════════════════════════════════════════════════════ -->
+<h2>v97.0 &mdash; 6-Card Session Support + Cards-to-Print Selector + 7:59 AM Tee Time <span class="badge badge-enhancement">Enhancement</span></h2>
+
+<p>The LG3 weekly field grew to require up to six scorecards per session — 24 golfers on Thursdays, 20 on Tuesdays. v97.0 fully supports both without printing blank cards.</p>
+
+<h3>7:59 AM Tee Time</h3>
+<ul>
+    <li><strong>7:59 AM</strong> added as the first option in the Tee Time dropdown — covering Tuesday's earliest pairing</li>
+    <li><code>MP_TEE_MAP</code> updated: <em>7:59 AM → Match 0 — 7:59 AM</em></li>
+</ul>
+
+<h3>6-Card Expansion</h3>
+<ul>
+    <li>CARDS session array expanded from <strong>4 → 6</strong> blank cards</li>
+    <li><strong>Card 5</strong> and <strong>Card 6</strong> tab buttons added to the setup panel</li>
+    <li>All sync and restore loops extended to cover all six cards</li>
+</ul>
+
+<h3>Cards-to-Print Selector</h3>
+<ul>
+    <li>New <strong>"Cards to Print"</strong> dropdown in the setup bar — choose <strong>2, 3, 4, 5, or 6</strong></li>
+    <li>Card tabs beyond the selected count are <strong>hidden automatically</strong></li>
+    <li>If you switch to a lower count while on a hidden card, the app jumps back to the last visible card</li>
+    <li><strong>Print All Cards</strong> only generates sheets for the selected count — no blank cards wasted</li>
+</ul>
+
+<table>
+    <thead><tr><th>Cards to Print</th><th>Sheets Generated</th><th>Golfers Covered</th></tr></thead>
+    <tbody>
+        <tr><td>2</td><td>Sheet 1 (Cards 1–2)</td><td>8</td></tr>
+        <tr><td>3</td><td>Sheet 1 + Sheet 2 (Card 3 only)</td><td>12</td></tr>
+        <tr><td>4</td><td>Sheet 1 + Sheet 2</td><td>16</td></tr>
+        <tr><td>5</td><td>Sheet 1 + Sheet 2 + Sheet 3 (Card 5 only)</td><td>20</td></tr>
+        <tr><td><strong>6</strong></td><td><strong>Sheet 1 + Sheet 2 + Sheet 3</strong></td><td><strong>24</strong></td></tr>
+    </tbody>
+</table>
+
+<div class="note">Tuesday setup: set to <strong>5 cards</strong>, first tee time 7:59 AM = 20 golfers. Thursday setup: set to <strong>6 cards</strong>, first tee time 8:08 AM = 24 golfers.</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FLIGHTED LG/LN — OVERVIEW
+     ═══════════════════════════════════════════════════════════ -->
+<h2>v97.1–v97.7 &mdash; Flighted Low Gross / Low Net Scorecard <span class="badge badge-new">New Format</span></h2>
+
+<p>A brand-new competition format added to the LG3 scorecard system. The field is divided into three handicap flights — each flight crowns its own <strong>Low Gross</strong> winner and <strong>Low Net</strong> winner. The same player cannot win both; if the leader in gross also leads in net, net goes to the next player in that flight.</p>
+
+<div class="scarlet-note"><strong>Key principle:</strong> Flights are assigned by <strong>GHIN Handicap Index</strong>, not by playing handicap. Indexes are stable across tees and give the fairest, most consistent way to group the field regardless of which tees a player uses.</div>
+
+<h3>Flight Assignments</h3>
+<table class="flight-table">
+    <thead><tr><th>Flight</th><th>GHIN Index Range</th><th>Winners</th></tr></thead>
+    <tbody>
+        <tr><td><strong>A</strong></td><td>8.7 – 12.3</td><td>Low Gross &amp; Low Net</td></tr>
+        <tr><td><strong>B</strong></td><td>12.7 – 19.0</td><td>Low Gross &amp; Low Net</td></tr>
+        <tr><td><strong>C</strong></td><td>21.5 – 28.2</td><td>Low Gross &amp; Low Net</td></tr>
+    </tbody>
+</table>
+<p class="small">Any GHIN Index outside the defined ranges displays <strong>FLT&nbsp;?</strong> on the card — a flag to verify the player's index before printing.</p>
+
+<h3>Card Layout</h3>
+<p>Each player occupies <strong>two rows</strong> across all 18 holes:</p>
+<table>
+    <thead><tr><th>Row</th><th>Background</th><th>Content</th></tr></thead>
+    <tbody>
+        <tr><td><strong>GROSS</strong></td><td>Scarlet-light (#F8E7EA)</td><td>Last name &bull; FLT A/B/C badge &bull; Tee, CH, GHIN Index &bull; stroke dots in scarlet</td></tr>
+        <tr><td><strong>NET</strong></td><td>Grey-light (#F6F7F8)</td><td>"NET" label &bull; stroke indicator dots in dark grey &bull; OUT / IN / TOT subtotals</td></tr>
+    </tbody>
+</table>
+
+<ul>
+    <li><strong>Net scoring</strong> uses <strong>100% of Playing Handicap</strong></li>
+    <li>Stroke dots appear on the correct holes based on each player's individual Playing Handicap and their tee's Stroke Index</li>
+    <li>OUT, IN, and TOT subtotal boxes on <strong>both</strong> the GROSS and NET rows</li>
+    <li>Color palette: <strong>Scarlet &amp; Grey</strong> (Ohio State PMS 200 / PMS 429) — instantly distinguishable from the green stroke play card</li>
+</ul>
+
+<h3>Setup &amp; Selection</h3>
+<ul>
+    <li>Select <strong>Flighted LG/LN</strong> from the <em>Select Game</em> dropdown in Scorecard Setup — no separate button required</li>
+    <li>Enter each player's <strong>GHIN Index</strong> in the index field — the card auto-assigns and displays the correct flight badge</li>
+    <li>All four player fields (name, tee, gender, index) function identically to other card formats</li>
+</ul>
+
+<h3>Back Panel — Flighted Mode</h3>
+<table>
+    <thead><tr><th>Column</th><th>Width</th><th>Content</th></tr></thead>
+    <tbody>
+        <tr><td>Left (Col 1)</td><td>35%</td><td>USGA Local Rules (unchanged from standard card)</td></tr>
+        <tr><td>Center (Col 2)</td><td>35%</td><td><strong>Flight Table</strong> — index ranges, two-winner rule, net scoring explanation</td></tr>
+        <tr><td>Right (Col 3)</td><td>30%</td><td><strong>Weekly Game Notes</strong> (same text box as all other formats)</td></tr>
+    </tbody>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════════
+     REFINEMENT VERSIONS
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Refinement History (v97.1 → v97.7)</h2>
+
+<h3>v97.1 — Initial Build <span class="badge badge-new">New</span></h3>
+<ul>
+    <li><code>assignFlight()</code> and <code>buildFlightedCard()</code> functions created</li>
+    <li>Scarlet &amp; Grey palette wired into <code>setMode()</code>, <code>refreshHeader()</code>, and <code>toggleBack()</code></li>
+    <li>Back panel Flight Table and rules content authored</li>
+</ul>
+
+<h3>v97.2 — Bug Fixes + Dropdown Integration <span class="badge badge-fix">Bug Fix</span></h3>
+<ul>
+    <li><strong>GHIN field ID corrected</strong> — function was reading <code>p0index</code> but the actual input IDs are <code>p0ghin</code>. This caused all GHIN values to return empty, breaking flight assignment and handicap calculation</li>
+    <li><strong>Stroke dot calculation fixed</strong> — <code>makeDots()</code> was scoped inside <code>buildSinglesCard()</code> and invisible at the global level; replaced with an inline per-player calculation using each player's own tee Stroke Index data</li>
+    <li>Standalone <strong>Flighted LG/LN button removed</strong>; format moved into the <em>Select Game</em> dropdown for consistency with all other game modes</li>
+</ul>
+
+<h3>v97.3 — Back Panel Restructure <span class="badge badge-design">Design</span></h3>
+<ul>
+    <li>Flight Table moved from col 3 → <strong>col 2 (center)</strong></li>
+    <li><strong>Weekly Game Notes</strong> text box restored in col 3 (right) — previously hidden in flighted mode</li>
+    <li>Scarlet palette correctly applied when toggling to the back side in flighted mode</li>
+</ul>
+
+<h3>v97.4 — Text Size Increase <span class="badge badge-enhancement">Enhancement</span></h3>
+<ul>
+    <li>All font sizes increased for senior readability: player name 9pt&rarr;12pt, NET label 7.5pt&rarr;10pt, hole numbers 7pt&rarr;9pt, GROSS label 6pt&rarr;8.5pt, and more</li>
+    <li>Row heights also increased at this stage — later reverted in v97.7 to fix print clipping</li>
+</ul>
+
+<h3>v97.5 — Stroke Dot Refinement <span class="badge badge-design">Design</span></h3>
+<ul>
+    <li>Stroke dots reverted to <strong>original 5pt size</strong> — the 11pt dots introduced in v97.4 overlapped score entry space</li>
+    <li><strong>font-weight: 900</strong> retained — dots are darker and crisper without being oversized</li>
+    <li>GROSS row dot: full scarlet (<code>#BA0C2F</code>); NET row dot: darkened to <code>#444</code></li>
+</ul>
+
+<h3>v97.6 — NET Row Label Cleanup <span class="badge badge-design">Design</span></h3>
+<ul>
+    <li>Removed <em>"PH: scratch"</em> and <em>"&minus;&nbsp;= stroke hole"</em> text from the NET row label cell</li>
+    <li>NET row label now shows only <strong>"NET"</strong> — cleaner, less cluttered</li>
+</ul>
+
+<h3>v97.7 — Print Sizing Fix <span class="badge badge-fix">Bug Fix</span></h3>
+<ul>
+    <li>Row heights reverted to match the <strong>standard LG3 card dimensions</strong>:</li>
+</ul>
+
+<table>
+    <thead><tr><th>Row</th><th>v97.4–v97.6</th><th>v97.7 (Final)</th><th>Standard CSS Reference</th></tr></thead>
+    <tbody>
+        <tr><td>HOLE header</td><td>24px</td><td><strong>17px</strong></td><td><code>.rhdr</code> = 17px</td></tr>
+        <tr><td>PAR</td><td>20px</td><td><strong>14px</strong></td><td><code>.rpar</code> = 14px</td></tr>
+        <tr><td>HDCP / SI</td><td>16px</td><td><strong>13px</strong></td><td><code>.rsi</code> = 13px</td></tr>
+        <tr><td>GROSS player</td><td>42px</td><td><strong>36px</strong></td><td>Pre-v97.4 working size</td></tr>
+        <tr><td>NET player</td><td>32px</td><td><strong>26px</strong></td><td>Pre-v97.4 working size</td></tr>
+    </tbody>
+</table>
+
+<ul>
+    <li>Total table height: <strong>322px</strong> vs. 348px printable area — fits with a comfortable 26px margin</li>
+    <li>All enlarged font sizes from v97.4 are <strong>preserved</strong> — only row heights were adjusted</li>
+</ul>
+
+<!-- ═══════════════════════════════════════════════════════════
+     REGRESSION SUMMARY
+     ═══════════════════════════════════════════════════════════ -->
+<h2>Regression &amp; Compatibility</h2>
+<p>All existing formats were tested against a 37-point regression checklist across every build in Build 97. No regressions were introduced.</p>
+<ul>
+    <li>Stroke Play (all variants), Stableford, 15/20 Balls — <span class="check">&#10003;</span> unaffected</li>
+    <li>Shamble, Chapman, Scramble, Two Low Net — <span class="check">&#10003;</span> unaffected</li>
+    <li>Team Match Play, Singles Match Play — <span class="check">&#10003;</span> unaffected</li>
+    <li>Tampa Palms rating/slope data, USGA formula, Stableford chart — <span class="check">&#10003;</span> intact</li>
+    <li>Fold gutter, PDF export, Print Both / Print All Cards — <span class="check">&#10003;</span> intact</li>
+    <li>Cards-to-Print selector, 6-card session tabs — <span class="check">&#10003;</span> intact</li>
+    <li>Back panel: USGA rules, Singles How-to-Score, Singles Local Rules, Weekly Game Notes — <span class="check">&#10003;</span> intact</li>
+</ul>
+
+<p class="small">Build 97 final release: <strong>LG3_Scorecard_v97.7.html</strong> &mdash; October 19, 2026</p>
+</div>
